@@ -13,6 +13,15 @@ function makeId() {
     return txt;
 }
 
+function getRandomWord(minStr, maxStr) {
+    var word = '';
+    var randLength = Math.floor(Math.random() * (maxStr - minStr + 1) + minStr);
+    for (var i = 0; i < randLength; i++) {
+        word += String.fromCharCode(Math.floor(Math.random() * 25 + 97));
+    }
+    return word;
+}
+
 function sureUniqueId(arr) {
     if (arr) {
         var uniqueId;

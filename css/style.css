@@ -1,0 +1,81 @@
+/* Fonts */
+
+@font-face {
+    font-family: ubuntu;
+    src: url('../fonts/Ubuntu/Ubuntu-Light.ttf');
+}
+
+@font-face {
+    font-family: play;
+    src: url('../fonts/Playfair_Display/PlayfairDisplay-Regular.ttf');
+}
+
+@font-face {
+    font-family: inconsolata;
+    src: url('../fonts/Incosolata/Inconsolata-Regular.ttf');
+}
+
+
+/* Base */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: play, serif;
+    color: rgb(36, 36, 36);
+}
+
+body {
+    margin: 0;
+    font-size: 16px;
+}
+
+
+/* layout */
+
+
+/* Header */
+
+@media (min-width: 600px) {}
+
+
+/* Main */
+
+@media (min-width: 600px) {}
+
+
+/* Helpers */
+
+
+/* flex */
+
+.flex {
+    display: flex;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.space-even {
+    justify-content: space-evenly;
+}
+
+.align-center {
+    align-items: center
+}
+
+.flex.wrap {
+    flex-wrap: wrap;
+}
+
+
+/* Lists */
+
+.clean-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
