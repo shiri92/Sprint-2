@@ -94,7 +94,7 @@ function clearText() {
 }
 
 function downloadCanvas(elLink) {
-    var imgContent = gCanvas.toDataURL('image/jpeg/png');
+    var imgContent = gCanvas.toDataURL('image/png');
     elLink.href = imgContent
 }
 

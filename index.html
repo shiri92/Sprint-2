@@ -16,16 +16,19 @@
 
 <body onload="init()">
 
-    <!-- Navigation -->
-    <ul class="nav-bar flex">
-        <li onclick="checkPages('gallery')">Gallery</li>
-        <li onclick="checkPages('edit')">Edit</li>
-    </ul>
-
-    <!-- Header Gallery -->
-    <header>
-        <h1 class="title">Gallery</h1>
+    <!-- Header and Navigation -->
+    <header class="flex">
+        <ul class="nav-bar">
+            <li onclick="checkPages('gallery')">Gallery</li>
+            <li onclick="checkPages('edit')">Edit</li>
+        </ul>
     </header>
+
+    <!-- Title Gallery -->
+    <div class="title-container">
+        <h1 class="title">Gallery</h1>
+    </div>
+
 
     <!----------------------- Main Gallery --------------------->
     <main class="main-gallery">

@@ -41,27 +41,23 @@ body {
 /* layout */
 
 
-/* Nav */
-
-.nav-bar {
-    background-color: rgb(57, 97, 122);
-    margin-top: 0;
-}
-
-.nav-bar li {
-    float: left;
-    color: rgb(230, 239, 245);
-    display: inline-block;
-    padding: 14px 16px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-
 /* Header */
 
 header {
+    background-color: rgb(57, 97, 122);
+}
+
+
+/* Nav */
+
+.nav-bar li {
+    color: rgb(230, 239, 245);
+    display: inline-block;
+    padding: 0 16px;
+    cursor: pointer;
+}
+
+.title-container {
     text-align: center;
 }
 
@@ -139,13 +135,7 @@ footer {
         background-color: rgb(57, 97, 122);
     }
     .nav-bar li {
-        float: left;
-        color: rgb(230, 239, 245);
-        display: inline-block;
         padding: 14px 16px;
-        text-align: center;
-        text-decoration: none;
-        cursor: pointer;
     }
     .nav-bar li:hover {
         background-color: rgb(32, 45, 54);
