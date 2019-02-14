@@ -3,20 +3,18 @@
 function init() {
     gCanvas = document.getElementById('edit-canvas');
     gCtx = gCanvas.getContext('2d');
-    gCtx.font = "30px Arial";
+    gCtx.font = gFontSize;
     createImgs();
     renderImgs();
 }
 
 function renderImgs() {
     var imgs = getImgs();
-    var strHtml = imgs.map(function(img) {
+    var strHtml = imgs.map(function (img) {
         return `<img onclick="chooseImgFromGallery(this)" src="${img.url}" alt="img">`
     })
     $('.photo-gallery').html(strHtml.join(''));
 }
-
-
 
 function checkPages(val) {
     if (val === 'gallery') {
@@ -29,49 +27,24 @@ function checkPages(val) {
     }
 }
 
-
 function moveToEdit() {
     $('.main-gallery').css('display', 'none');
     $('.main-edit').css('display', 'block');
 }
 
-
-// CRUDl - create read update delete
-// function onAddSomething() {
-//     addSomething(someId);
-//     renderAll();
-// }
-
-// function onReadSomething(someId) {
-//     readSomething(someId);
-// }
-
-// function readSomething(someId) {
-//     var global = getCarById(someId);
-//     var $modal = $('.modal');
-//     $modal.find('h5').text(global.name);
-//     $modal.find('p').text(global.details);
-//     $modal.show();
-// }
-
-// function onUpdateSomething(someId) {
-//     updateSomething(someId, someUpdate);
-//     renderAll();
-// }
-
-// function onDeleteSomething(someId) {
-//     deleteSomething(someId);
-//     renderAll();
-// }
-
-
 function renderCanvasUpload(img) {
+    gCurrImg = img;
+    gWidthImg = img.naturalWidth;
+    gHeightImg = img.naturalHeight;
     gCanvas.width = img.width;
     gCanvas.height = img.height;
     gCtx.drawImage(img, 0, 0);
 }
 
 function renderCanvasGallery(img) {
+    gCurrImg = img;
+    gWidthImg = img.naturalWidth;
+    gHeightImg = img.naturalHeight;
     gCanvas.width = img.naturalWidth;
     gCanvas.height = img.naturalHeight;
     var wRatio = gCanvas.width / img.naturalWidth;
@@ -97,46 +70,51 @@ function handleImageFromInput(ev, onImageReady) {
     reader.readAsDataURL(ev.target.files[0]);
 }
 
-
 function chooseImgFromGallery(img) {
     renderCanvasGallery(img);
     moveToEdit();
 }
 
 function clearCanvas() {
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+    gCtx.clearRect(0, 0, gWidthImg, gHeightImg);
     $("#canvasimg").css('display', 'none');
 }
-
-// function downloadCanvas(elBtn) {
-//     var image = gCanvas.toDataURL('image/png');
-//     elBtn.href = image;
-// }
 
 function downloadCanvas(elLink) {
     var imgContent = gCanvas.toDataURL('image/jpeg');
     elLink.href = imgContent
 }
 
-function changeText(textVal) {
-    console.log(textVal);
-    clearCanvas();
-    var spaceUp = gCanvas.width/2;
-    var spaceLeft = gCanvas.height/2;
-    gCtx.fillStyle = gColorText;
-    gCtx.textAlign = "center";
-    gCtx.fillText(textVal, spaceLeft, spaceUp);
-}
+function changeText() {
 
-var gColorText = 'black';
-var gShadowColor = '';
+    clearCanvas();
+    renderCanvasGallery(gCurrImg);
+
+    var spaceLeft = gCanvas.width / 2;
+    gCtx.fillStyle = gColorText;
+    gCtx.textAlign = 'center';
+    gCtx.font = gFontSize;
+    gCtx.color = gColorText;
+    gCtx.lineWidth = 3;
+
+    var spaceInputUp = 60;
+    var elUp = $('.line-text-up').val();
+    gCtx.fillText(elUp, spaceLeft, spaceInputUp);
+    gCtx.strokeText(elUp, spaceLeft, spaceInputUp);
+
+    var spaceInputDown = gHeightImg - 20;
+    var elDown = $('.line-text-down').val();
+    gCtx.fillText(elDown, spaceLeft, spaceInputDown);
+    gCtx.strokeText(elDown, spaceLeft, spaceInputDown);
+
+}
 
 function changeTextColor(textColor) {
     gColorText = textColor;
     changeText($('.line-text'));
 }
 
-function changeShadowColor(shadowColor){
+function changeShadowColor(shadowColor) {
     gShadowColor = shadowColor;
     changeText($('.line-text'));
 }
@@ -145,11 +123,12 @@ function setColors() {
     var backColor = loadFromStorage('backgroundColor');
     $('body').css('backgroundColor', backColor);
     $('.color-back').val(backColor);
-  
+
     var textColor = loadFromStorage('color');
     $('body').css('color', textColor);
     $('.color-text').val(textColor);
-  }
+}
+
 function onNextPage() {
     nextPage();
     renderImgs();

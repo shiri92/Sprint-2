@@ -42,12 +42,12 @@
 
     </main>
 
-
     <!----------------------- Main Edit ---------------------------->
     <main class="main-edit">
         <!-- Inputs -->
         <section class="">
-            <input autofocus class="line-text" oninput="changeText(this.value)" type="text" placeholder="write first line">
+            <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line">
+            <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line">
 
             <input class="color-text" onchange="changeTextColor(this.value)" type="color" value="#ff0000">
             <input class="color-back" onchange="changeShadowColor(this.value)" type="color" value="#ff0000">
@@ -60,11 +60,7 @@
         <!-- Canvas -->
         <section class="canvas">
             <canvas height="500" width="500" id="edit-canvas"></canvas>
-            <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
-
         </section>
-
-
     </main>
 
     <!-- Footer -->

@@ -6,6 +6,15 @@ var gCtx;
 const PAGE_SIZE = 6;
 var currPageIdx = 0;
 
+var gWidthImg = 500;
+var gHeightImg = 500;
+
+var gColorText = 'white';
+var gShadowColor = '';
+
+var gCurrImg;
+var gFontSize = '50px impact-meme';
+
 var gImgs;
 var gMeme = {
     selectedImgId: 5,
@@ -22,8 +31,6 @@ function getImgs() {
     var imgs = gImgs.slice(fromIdx, fromIdx + PAGE_SIZE);
     return imgs;
 }
-
-
 
 function createImgs() {
     var imgs = [
@@ -49,26 +56,6 @@ function createImg(url) {
         url: url,
         keywords: []
     }
-}
-
-
-function addSomething(someId) {
-    var some = createSomeone(someId);
-    gGlobal.push(some);
-}
-
-function updateSomething(someId, someUpdate) {
-    var someIdx = gGlobal.findIndex(function(global) {
-        return global.id === someId;
-    })
-    gGlobal[someIdx].theUpdateKey = someUpdate;
-}
-
-function deleteSomething(someId) {
-    var someIdx = gGlobal.findIndex(function(global) {
-        return global.id === someId;
-    })
-    gGlobal.splice(someIdx, 1);
 }
 
 function nextPage() {
