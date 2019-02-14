@@ -45,14 +45,7 @@ body {
 
 .nav-bar {
     background-color: rgb(57, 97, 122);
-    list-style-type: none;
-    margin-bottom: 0px;
-    margin-left: 0%;
-    margin-right: 0%;
-    margin-top: 0px;
-    overflow: hidden;
-    padding: 0;
-    padding-left: 10px;
+    margin-top: 0;
 }
 
 .nav-bar li {
@@ -63,10 +56,6 @@ body {
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-}
-
-.nav-bar li:hover {
-    background-color: rgb(32, 45, 54);
 }
 
 
@@ -90,7 +79,7 @@ main {
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 20px;
     height: 2000px;
-    max-width: 350px;
+    max-width: 340px;
 }
 
 .photo-gallery img {
@@ -98,7 +87,12 @@ main {
     height: 100%;
     object-fit: fill;
     cursor: pointer;
-    box-shadow: 0 0 20px 0px black;
+    box-shadow: 2px 3px 12px 0px black;
+    border-radius: 4px;
+}
+
+.photo-gallery img:hover {
+    border: 2px solid gold;
 }
 
 .btn-download {
@@ -140,12 +134,28 @@ footer {
 }
 
 @media (min-width: 740px) {
+    /* Nav */
+    .nav-bar {
+        background-color: rgb(57, 97, 122);
+    }
+    .nav-bar li {
+        float: left;
+        color: rgb(230, 239, 245);
+        display: inline-block;
+        padding: 14px 16px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .nav-bar li:hover {
+        background-color: rgb(32, 45, 54);
+    }
     .photo-gallery {
         margin: 0 auto;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr;
         grid-gap: 20px;
-        height: 650px;
+        height: 750px;
         max-width: 700px;
     }
 }

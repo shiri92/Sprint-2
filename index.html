@@ -17,14 +17,14 @@
 <body onload="init()">
 
     <!-- Navigation -->
-    <ul class="nav-bar">
+    <ul class="nav-bar flex">
         <li onclick="checkPages('gallery')">Gallery</li>
         <li onclick="checkPages('edit')">Edit</li>
     </ul>
 
     <!-- Header Gallery -->
-    <header class="">
-        <h1>Gallery</h1>
+    <header>
+        <h1 class="title">Gallery</h1>
     </header>
 
     <!----------------------- Main Gallery --------------------->
@@ -49,11 +49,11 @@
             <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line">
             <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line">
 
-            <input class="color-text" onchange="changeTextColor(this.value)" type="color" value="#ff0000">
-            <input class="color-back" onchange="changeShadowColor(this.value)" type="color" value="#ff0000">
+            <input class="color-text" onchange="changeTextColor(this.value)" type="color" value="#ffffff">
+            <input class="color-back" onchange="changeStrokeColor(this.value)" type="color" value="#000000">
 
             <a href="#" onclick="downloadCanvas(this)" download="meme">Download</a>
-            <button onclick="clearCanvas()">Clear Text</button>
+            <button onclick="clearCanvas();clearText()">Clear Text</button>
         </section>
         <br>
 

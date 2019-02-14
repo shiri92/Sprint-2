@@ -20,16 +20,20 @@ function checkPages(val) {
     if (val === 'gallery') {
         $('.main-gallery').css('display', 'block');
         $('.main-edit').css('display', 'none');
+        $('.title').html('Gallery');
+
     }
     if (val === 'edit') {
         $('.main-gallery').css('display', 'none');
         $('.main-edit').css('display', 'block');
+        $('.title').html('Edit');
     }
 }
 
 function moveToEdit() {
     $('.main-gallery').css('display', 'none');
     $('.main-edit').css('display', 'block');
+    $('.title').html('Edit');
 }
 
 function renderCanvasUpload(img) {
@@ -73,15 +77,24 @@ function handleImageFromInput(ev, onImageReady) {
 function chooseImgFromGallery(img) {
     renderCanvasGallery(img);
     moveToEdit();
+    changeText();
 }
 
 function clearCanvas() {
     gCtx.clearRect(0, 0, gWidthImg, gHeightImg);
     $("#canvasimg").css('display', 'none');
+    renderCanvasGallery(gCurrImg);
+}
+
+function clearText() {
+    $('.line-text-up').val('');
+    $('.line-text-down').val('');
+    gColorText = 'white';
+    gStrokeColor = 'black';
 }
 
 function downloadCanvas(elLink) {
-    var imgContent = gCanvas.toDataURL('image/jpeg');
+    var imgContent = gCanvas.toDataURL('image/jpeg/png');
     elLink.href = imgContent
 }
 
@@ -96,6 +109,7 @@ function changeText() {
     gCtx.font = gFontSize;
     gCtx.color = gColorText;
     gCtx.lineWidth = 3;
+    gCtx.strokeStyle = gStrokeColor;
 
     var spaceInputUp = 60;
     var elUp = $('.line-text-up').val();
@@ -111,12 +125,12 @@ function changeText() {
 
 function changeTextColor(textColor) {
     gColorText = textColor;
-    changeText($('.line-text'));
+    changeText();
 }
 
-function changeShadowColor(shadowColor) {
-    gShadowColor = shadowColor;
-    changeText($('.line-text'));
+function changeStrokeColor(strokeColor) {
+    gStrokeColor = strokeColor;
+    changeText();
 }
 
 function setColors() {

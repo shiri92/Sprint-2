@@ -10,7 +10,7 @@ var gWidthImg = 500;
 var gHeightImg = 500;
 
 var gColorText = 'white';
-var gShadowColor = '';
+var gStrokeColor = 'black';
 
 var gCurrImg;
 var gFontSize = '50px impact-meme';
