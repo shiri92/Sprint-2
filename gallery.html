@@ -6,68 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Sprint 2</title>
+    <title>Gallery</title>
     <link rel="icon" href="img/icon.png">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gallery.css">
 
 </head>
 
 <body onload="init()">
 
     <!-- Navigation -->
-    <nav>
-        <ul class="">
-            <li>Home</li>
-            <li>Galery</li>
-            <li>Community</li>
-            <li>Archive</li>
-            <li>Contact</li>
-            <li>Settings</li>
-        </ul>
-    </nav>
+    <ul class="nav-bar">
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="edit.html">Edit</a></li>
+    </ul>
 
     <!-- Header -->
     <header class="">
-        <h1>Hello sprint 2!</h1>
-        <h1>Welcome to our Home</h1>
+        <h1>Gallery</h1>
     </header>
 
     <!-- Main -->
     <main>
+        <input type="file" name="image" onchange="onFileInputChange(event)" />
+        <br><br>
+        <!-- Photos galery -->
+        <section class="photo-gallery">
+            <img class="img1" src="img/memes/1.jpg" alt="">
+            <img class="img2" src="img/memes/2.jpg" alt="">
+            <img class="img3" src="img/memes/3.jpg" alt="">
+            <img class="img4" src="img/memes/4.jpg" alt="">
+            <img class="img5" src="img/memes/5.jpg" alt="">
+            <img class="img6" src="img/memes/6.jpg" alt="">
+            <img class="img7" src="img/memes/7.jpg" alt="">
+            <img class="img8" src="img/memes/8.jpg" alt="">
+            <img class="img9" src="img/memes/9.jpg" alt="">
+            <img class="img10" src="img/memes/10.jpg" alt="">
+            <img class="img11" src="img/memes/11.jpg" alt="">
+            <img class="img12" src="img/memes/12.jpg" alt="">
+        </section>
+
+
         <!-- articles -->
         <section class="">
-            <h3>Library - Quiet please</h3>
+            <!-- <h3>Library - Quiet please</h3>
             <article>
                 <p>Article Name</p>
                 <img src="img/home/article1.png" alt="">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ipsa dicta debitis sit repellat, tenetur doloremque? Porro suscipit nemo dolores at harum? Eius necessitatibus consectetur magni perspiciatis temporibus similique harum.</p>
-            </article>
+            </article> -->
         </section>
 
-        <!-- Photos galery -->
-        <section class="">
-            <h3>Our galery!</h3>
-            <div>Photo 1</div>
-            <div>Photo 2</div>
-            <div>Photo 3</div>
-            <div>Photo 4</div>
-        </section>
 
         <!-- Aside -->
         <aside>
-            <div>
+            <!-- <div>
                 <h3>Aside - Advertisements</h3>
-            </div>
+            </div> -->
         </aside>
     </main>
 
     <!-- Footer -->
     <footer>
-        <div>
+        <!-- <div>
             <h3>I'm a footer</h3>
-        </div>
+        </div> -->
     </footer>
 
     <!-- jQuery -->

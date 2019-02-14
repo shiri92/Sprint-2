@@ -36,3 +36,21 @@ function onDeleteSomething(someId) {
     deleteSomething(someId);
     renderAll();
 }
+
+// Select img to upload
+function onFileInputChange(ev) {
+    handleImageFromInput(ev, renderCanvas)
+}
+
+//UPLOAD IMG WITH INPUT FILE
+function handleImageFromInput(ev, onImageReady) {
+    document.querySelector('.share-container').innerHTML = ''
+    var reader = new FileReader();
+    console.log(ev)
+    reader.onload = function (event) {
+        var img = new Image();
+        img.onload = onImageReady.bind(null, img)
+        img.src = event.target.result;
+    }
+    reader.readAsDataURL(ev.target.files[0]);
+}
