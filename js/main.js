@@ -1,6 +1,8 @@
 'use strict';
 
 function init() {
+    gCanvas = document.getElementById('edit-canvas');
+    gCtx = gCanvas.getContext('2d');
     createAll();
     renderAll();
 }
@@ -8,6 +10,24 @@ function init() {
 function renderAll() {
 
 }
+
+function checkPages(val) {
+    if (val === 'gallery') {
+        $('.main-gallery').css('display', 'block');
+        $('.main-edit').css('display', 'none');
+    }
+    if (val === 'edit') {
+        $('.main-gallery').css('display', 'none');
+        $('.main-edit').css('display', 'block');
+    }
+}
+
+
+function moveToEdit() {
+    $('.main-gallery').css('display', 'none');
+    $('.main-edit').css('display', 'block');
+}
+
 
 // CRUDl - create read update delete
 function onAddSomething() {
@@ -37,20 +57,32 @@ function onDeleteSomething(someId) {
     renderAll();
 }
 
+
+function renderCanvas(img) {
+    gCanvas.width = img.width;
+    gCanvas.height = img.height;
+    gCtx.drawImage(img, 0, 0);
+}
+
 // Select img to upload
 function onFileInputChange(ev) {
     handleImageFromInput(ev, renderCanvas)
+    moveToEdit();
 }
 
 //UPLOAD IMG WITH INPUT FILE
 function handleImageFromInput(ev, onImageReady) {
-    document.querySelector('.share-container').innerHTML = ''
     var reader = new FileReader();
-    console.log(ev)
-    reader.onload = function (event) {
+    reader.onload = function(event) {
         var img = new Image();
-        img.onload = onImageReady.bind(null, img)
+        img.onload = onImageReady.bind(null, img);
         img.src = event.target.result;
     }
     reader.readAsDataURL(ev.target.files[0]);
+}
+
+
+function chooseImgFromGallery(img) {
+    renderCanvas(img);
+    moveToEdit();
 }

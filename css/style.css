@@ -35,6 +35,7 @@ body {
 
 /* layout */
 
+
 /* Nav */
 
 .nav-bar {
@@ -51,35 +52,62 @@ body {
 
 .nav-bar li {
     float: left;
-}
-
-.nav-bar li a {
     color: rgb(230, 239, 245);
     display: inline-block;
     padding: 14px 16px;
     text-align: center;
     text-decoration: none;
+    cursor: pointer;
 }
 
-.nav-bar li a:hover {
+.nav-bar li:hover {
     background-color: rgb(32, 45, 54);
 }
 
+
 /* Header */
-header{
+
+header {
     text-align: center;
 }
 
 @media (min-width: 600px) {}
 
 
-/* Main */
+/********************* Main gallery **********************/
 
-main{
+main {
     text-align: center;
 }
 
-canvas{
+.photo-gallery {
+    /* margin: 10px; */
+    display: grid;
+    /* grid-template-areas:
+      "img1 img2"
+      "img3 img3"
+      "icons icons"; */
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 0.33333fr 0.33333fr 0.33333fr;
+    /* grid-gap: 15px; */
+    height: 400px;
+}
+
+.photo-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+
+/********************* Main editor **********************/
+
+.main-edit {
+    display: none;
+}
+
+canvas {
     background-color: rgb(196, 230, 255);
     border: 2px solid gold;
 }

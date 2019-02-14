@@ -10,7 +10,7 @@
     <link rel="icon" href="img/icon.png">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -18,22 +18,22 @@
 
     <!-- Navigation -->
     <ul class="nav-bar">
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="edit.html">Edit</a></li>
+        <li onclick="checkPages('gallery')">Gallery</li>
+        <li onclick="checkPages('edit')">Edit</li>
     </ul>
 
-    <!-- Header -->
+    <!-- Header Gallery -->
     <header class="">
         <h1>Gallery</h1>
     </header>
 
-    <!-- Main -->
-    <main>
+    <!----------------------- Main Gallery --------------------->
+    <main class="main-gallery">
         <input type="file" name="image" onchange="onFileInputChange(event)" />
         <br><br>
         <!-- Photos galery -->
         <section class="photo-gallery">
-            <img class="img1" src="img/memes/1.jpg" alt="">
+            <img onclick="chooseImgFromGallery(this)" class="img1" src="img/memes/1.jpg" alt="">
             <img class="img2" src="img/memes/2.jpg" alt="">
             <img class="img3" src="img/memes/3.jpg" alt="">
             <img class="img4" src="img/memes/4.jpg" alt="">
@@ -48,23 +48,35 @@
         </section>
 
 
-        <!-- articles -->
+    </main>
+
+
+    <!----------------------- Main Edit ---------------------------->
+    <main class="main-edit">
+        <!-- Inputs -->
         <section class="">
-            <!-- <h3>Library - Quiet please</h3>
-            <article>
-                <p>Article Name</p>
-                <img src="img/home/article1.png" alt="">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ipsa dicta debitis sit repellat, tenetur doloremque? Porro suscipit nemo dolores at harum? Eius necessitatibus consectetur magni perspiciatis temporibus similique harum.</p>
-            </article> -->
+            <input class="line-text" type="text">
+            <input class="color-text" onchange="changeTextColor()" type="color" value="#ff0000">
+            <input class="color-back" onchange="changeBackColor()" type="color" value="#ff0000">
+            <select onchange="selectShape(this.value)">
+                    <option id="0">Normal</option>
+                    <option id="1">CIRCLES ◉</option>
+                    <option id="2">SQUARES ▩</option>
+                </select>
+            <button onclick="save()">save</button>
+            <button onclick="erase()">clear</button>
+            <button>about</button>
+        </section>
+        <br>
+
+        <!-- Canvas -->
+        <section class="canvas">
+            <canvas height="500" width="500" id="edit-canvas"></canvas>
+            <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+
         </section>
 
 
-        <!-- Aside -->
-        <aside>
-            <!-- <div>
-                <h3>Aside - Advertisements</h3>
-            </div> -->
-        </aside>
     </main>
 
     <!-- Footer -->
