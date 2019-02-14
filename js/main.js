@@ -10,7 +10,7 @@ function init() {
 
 function renderImgs() {
     var imgs = getImgs();
-    var strHtml = imgs.map(function(img) {
+    var strHtml = imgs.map(function (img) {
         return `<img onclick="chooseImgFromGallery(this)" src="${img.url}" alt="img">`
     })
     $('.photo-gallery').html(strHtml.join(''));
@@ -49,12 +49,35 @@ function renderCanvasGallery(img) {
     gCurrImg = img;
     gWidthImg = img.naturalWidth;
     gHeightImg = img.naturalHeight;
-    gCanvas.width = img.naturalWidth;
-    gCanvas.height = img.naturalHeight;
-    var wRatio = gCanvas.width / img.naturalWidth;
-    var hRatio = gCanvas.height / img.naturalHeight;
-    var ratio = Math.min(wRatio, hRatio);
-    gCtx.drawImage(img, 0, 0, gCanvas.width * ratio, gCanvas.height * ratio);
+    gWidthWindow = $(window).innerWidth();
+    gHeightWindow = $(window).innerHeight();
+    var headerH = $('header').innerHeight();
+    var titleH = $('.title-container').innerHeight();
+    var inputsH = $('.input-bar').innerHeight();
+    var footerH = $('footer').innerHeight();
+    var sum = headerH + titleH + inputsH + footerH;
+    // console.log('headerH', headerH);
+    // console.log('titleH', titleH);
+    // console.log('inputsH', inputsH);
+    // console.log('fotterH', footerH);
+
+    if (gWidthImg < gWidthWindow) {
+        gCanvas.width = gWidthImg;
+    } else {
+        gCanvas.width = gWidthWindow;
+    }
+    // console.log(sum);
+    if (gHeightImg < gHeightWindow - sum) {
+        gCanvas.height = gHeightImg;
+    } else {
+        gCanvas.height = gHeightWindow - sum;
+    }
+
+    // var wRatio = gCanvas.width / gWidthImg;
+    // var hRatio = gCanvas.height / gHeightImg;
+    // var ratio = Math.min(wRatio, hRatio);
+
+    gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
 }
 
 // Select img to upload
@@ -66,7 +89,7 @@ function onFileInputChange(ev) {
 //UPLOAD IMG WITH INPUT FILE
 function handleImageFromInput(ev, onImageReady) {
     var reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         var img = new Image();
         img.onload = onImageReady.bind(null, img);
         img.src = event.target.result;
