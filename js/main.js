@@ -10,7 +10,7 @@ function init() {
 
 function renderImgs() {
     var imgs = getImgs();
-    var strHtml = imgs.map(function (img) {
+    var strHtml = imgs.map(function(img) {
         return `<img onclick="chooseImgFromGallery(this)" src="${img.url}" alt="img">`
     })
     $('.photo-gallery').html(strHtml.join(''));
@@ -62,7 +62,7 @@ function onFileInputChange(ev) {
 //UPLOAD IMG WITH INPUT FILE
 function handleImageFromInput(ev, onImageReady) {
     var reader = new FileReader();
-    reader.onload = function (event) {
+    reader.onload = function(event) {
         var img = new Image();
         img.onload = onImageReady.bind(null, img);
         img.src = event.target.result;
