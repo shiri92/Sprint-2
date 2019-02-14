@@ -131,9 +131,6 @@ footer {
 
 @media (min-width: 740px) {
     /* Nav */
-    .nav-bar {
-        background-color: rgb(57, 97, 122);
-    }
     .nav-bar li {
         padding: 14px 16px;
     }
