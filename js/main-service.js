@@ -3,7 +3,10 @@
 var gCanvas;
 var gCtx;
 
-var gImgs = [{ id: 1, url: 'img/popo.jpg', keywords: ['happy'] }];
+const PAGE_SIZE = 6;
+var currPageIdx = 0;
+
+var gImgs;
 var gMeme = {
     selectedImgId: 5,
     txts: [{
@@ -14,19 +17,40 @@ var gMeme = {
     }]
 }
 
-
-
-function createAll() {
-
+function getImgs() {
+    var fromIdx = currPageIdx * PAGE_SIZE;
+    var imgs = gImgs.slice(fromIdx, fromIdx + PAGE_SIZE);
+    return imgs;
 }
 
-function createSomeone(someId) {
+
+
+function createImgs() {
+    var imgs = [
+        createImg('img/memes/1.jpg'),
+        createImg('img/memes/2.jpg'),
+        createImg('img/memes/3.jpg'),
+        createImg('img/memes/4.jpg'),
+        createImg('img/memes/5.jpg'),
+        createImg('img/memes/6.jpg'),
+        createImg('img/memes/7.jpg'),
+        createImg('img/memes/8.jpg'),
+        createImg('img/memes/9.jpg'),
+        createImg('img/memes/10.jpg'),
+        createImg('img/memes/11.jpg'),
+        createImg('img/memes/12.jpg')
+    ];
+    gImgs = imgs;
+}
+
+function createImg(url) {
     return {
         id: makeId(),
-        name: getRandomWord(3, 6),
-        age: getRandomIntInclusive(1, 100)
+        url: url,
+        keywords: []
     }
 }
+
 
 function addSomething(someId) {
     var some = createSomeone(someId);
@@ -45,4 +69,21 @@ function deleteSomething(someId) {
         return global.id === someId;
     })
     gGlobal.splice(someIdx, 1);
+}
+
+function nextPage() {
+    if (currPageIdx < howManyPages() - 1) {
+        currPageIdx++;
+    }
+}
+
+function prevPage() {
+    if (currPageIdx > 0) {
+        currPageIdx--;
+    }
+}
+
+function howManyPages() {
+    var number = Math.ceil(gImgs.length / PAGE_SIZE);
+    return number;
 }

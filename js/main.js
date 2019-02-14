@@ -3,13 +3,19 @@
 function init() {
     gCanvas = document.getElementById('edit-canvas');
     gCtx = gCanvas.getContext('2d');
-    createAll();
-    renderAll();
+    createImgs();
+    renderImgs();
 }
 
-function renderAll() {
-
+function renderImgs() {
+    var imgs = getImgs();
+    var strHtml = imgs.map(function(img) {
+        return `<img onclick="chooseImgFromGallery(this)" src="${img.url}" alt="img">`
+    })
+    $('.photo-gallery').html(strHtml.join(''));
 }
+
+
 
 function checkPages(val) {
     if (val === 'gallery') {
@@ -30,32 +36,32 @@ function moveToEdit() {
 
 
 // CRUDl - create read update delete
-function onAddSomething() {
-    addSomething(someId);
-    renderAll();
-}
+// function onAddSomething() {
+//     addSomething(someId);
+//     renderAll();
+// }
 
-function onReadSomething(someId) {
-    readSomething(someId);
-}
+// function onReadSomething(someId) {
+//     readSomething(someId);
+// }
 
-function readSomething(someId) {
-    var global = getCarById(someId);
-    var $modal = $('.modal');
-    $modal.find('h5').text(global.name);
-    $modal.find('p').text(global.details);
-    $modal.show();
-}
+// function readSomething(someId) {
+//     var global = getCarById(someId);
+//     var $modal = $('.modal');
+//     $modal.find('h5').text(global.name);
+//     $modal.find('p').text(global.details);
+//     $modal.show();
+// }
 
-function onUpdateSomething(someId) {
-    updateSomething(someId, someUpdate);
-    renderAll();
-}
+// function onUpdateSomething(someId) {
+//     updateSomething(someId, someUpdate);
+//     renderAll();
+// }
 
-function onDeleteSomething(someId) {
-    deleteSomething(someId);
-    renderAll();
-}
+// function onDeleteSomething(someId) {
+//     deleteSomething(someId);
+//     renderAll();
+// }
 
 
 function renderCanvasUpload(img) {
@@ -94,4 +100,14 @@ function handleImageFromInput(ev, onImageReady) {
 function chooseImgFromGallery(img) {
     renderCanvasGallery(img);
     moveToEdit();
+}
+
+function onNextPage() {
+    nextPage();
+    renderImgs();
+}
+
+function onPrevPage() {
+    prevPage();
+    renderImgs();
 }
