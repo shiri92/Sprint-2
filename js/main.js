@@ -5,6 +5,7 @@ function init() {
     gCtx = gCanvas.getContext('2d');
     createAll();
     renderAll();
+    gCtx.font = "30px Arial";
 }
 
 function renderAll() {
@@ -82,7 +83,7 @@ function onFileInputChange(ev) {
 //UPLOAD IMG WITH INPUT FILE
 function handleImageFromInput(ev, onImageReady) {
     var reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         var img = new Image();
         img.onload = onImageReady.bind(null, img);
         img.src = event.target.result;
@@ -95,3 +96,51 @@ function chooseImgFromGallery(img) {
     renderCanvasGallery(img);
     moveToEdit();
 }
+
+function clearCanvas() {
+    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+    $("#canvasimg").css('display', 'none');
+}
+
+// function downloadCanvas(elBtn) {
+//     var image = gCanvas.toDataURL('image/png');
+//     elBtn.href = image;
+// }
+
+function downloadCanvas(elLink) {
+    var imgContent = gCanvas.toDataURL('image/jpeg');
+    elLink.href = imgContent
+}
+
+function changeText(textVal) {
+    console.log(textVal);
+    clearCanvas();
+    var spaceUp = gCanvas.width/2;
+    var spaceLeft = gCanvas.height/2;
+    gCtx.fillStyle = gColorText;
+    gCtx.textAlign = "center";
+    gCtx.fillText(textVal, spaceLeft, spaceUp);
+}
+
+var gColorText = 'black';
+var gShadowColor = '';
+
+function changeTextColor(textColor) {
+    gColorText = textColor;
+    changeText($('.line-text'));
+}
+
+function changeShadowColor(shadowColor){
+    gShadowColor = shadowColor;
+    changeText($('.line-text'));
+}
+
+function setColors() {
+    var backColor = loadFromStorage('backgroundColor');
+    $('body').css('backgroundColor', backColor);
+    $('.color-back').val(backColor);
+  
+    var textColor = loadFromStorage('color');
+    $('body').css('color', textColor);
+    $('.color-text').val(textColor);
+  }

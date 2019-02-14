@@ -100,7 +100,23 @@ main {
     cursor: pointer;
 }
 
+.btn-download {
+    background-color: rgb(98, 199, 230);
+    border: 2px solid rgb(98, 199, 230);
+    border-radius: 0px;
+    color: black;
+    cursor: pointer;
+    font-size: 18px;
+    display: block;
+    padding: 12px 20px;
+    transition: 0s;
+}
 
+.btn-download:hover {
+    background-color: #0e3036;
+    border: 2px solid #0e3036;
+    color: rgb(255, 244, 244);
+}
 /********************* Main editor **********************/
 
 .main-edit {

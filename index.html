@@ -34,7 +34,7 @@
         <!-- Photos galery -->
         <section class="photo-gallery">
             <img onclick="chooseImgFromGallery(this)" class="img1" src="img/memes/1.jpg" alt="">
-            <img class="img2" src="img/memes/2.jpg" alt="">
+            <img  class="img2" src="img/memes/2.jpg" alt="">
             <img class="img3" src="img/memes/3.jpg" alt="">
             <img class="img4" src="img/memes/4.jpg" alt="">
             <img class="img5" src="img/memes/5.jpg" alt="">
@@ -55,17 +55,13 @@
     <main class="main-edit">
         <!-- Inputs -->
         <section class="">
-            <input class="line-text" type="text">
-            <input class="color-text" onchange="changeTextColor()" type="color" value="#ff0000">
-            <input class="color-back" onchange="changeBackColor()" type="color" value="#ff0000">
-            <select onchange="selectShape(this.value)">
-                    <option id="0">Normal</option>
-                    <option id="1">CIRCLES ◉</option>
-                    <option id="2">SQUARES ▩</option>
-                </select>
-            <button onclick="save()">save</button>
-            <button onclick="erase()">clear</button>
-            <button>about</button>
+            <input autofocus class="line-text" oninput="changeText(this.value)" type="text" placeholder="write first line">
+
+            <input class="color-text" onchange="changeTextColor(this.value)" type="color" value="#ff0000">
+            <input class="color-back" onchange="changeShadowColor(this.value)" type="color" value="#ff0000">
+
+            <a href="#" onclick="downloadCanvas(this)" download="meme">Download</a>
+            <button onclick="clearCanvas()">Clear Text</button>
         </section>
         <br>
 
