@@ -58,15 +58,24 @@ function onDeleteSomething(someId) {
 }
 
 
-function renderCanvas(img) {
+function renderCanvasUpload(img) {
     gCanvas.width = img.width;
     gCanvas.height = img.height;
     gCtx.drawImage(img, 0, 0);
 }
 
+function renderCanvasGallery(img) {
+    gCanvas.width = img.naturalWidth;
+    gCanvas.height = img.naturalHeight;
+    var wRatio = gCanvas.width / img.naturalWidth;
+    var hRatio = gCanvas.height / img.naturalHeight;
+    var ratio = Math.min(wRatio, hRatio);
+    gCtx.drawImage(img, 0, 0, gCanvas.width * ratio, gCanvas.height * ratio);
+}
+
 // Select img to upload
 function onFileInputChange(ev) {
-    handleImageFromInput(ev, renderCanvas)
+    handleImageFromInput(ev, renderCanvasUpload);
     moveToEdit();
 }
 
@@ -83,6 +92,6 @@ function handleImageFromInput(ev, onImageReady) {
 
 
 function chooseImgFromGallery(img) {
-    renderCanvas(img);
+    renderCanvasGallery(img);
     moveToEdit();
 }
