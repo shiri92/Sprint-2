@@ -10,6 +10,8 @@
     <link rel="icon" href="img/icon.png">
 
     <!-- Custom styles -->
+    <!-- <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -45,21 +47,55 @@
     <!----------------------- Main Edit ---------------------------->
     <main class="main-edit">
         <!-- Inputs -->
-        <section class="input-bar">
-            <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line">
-            <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line">
+        <div class="edit-conainer">
+            <section class="input-bar flex space-even wrap">
 
-            <input class="color-text" onchange="changeTextColor(this.value)" type="color" value="#ffffff">
-            <input class="color-back" onchange="changeStrokeColor(this.value)" type="color" value="#000000">
+                <div>
+                    <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line">
+                    <button class="delete-line" onclick="onRemoveInputText(this)">🗑️</button>
+                </div>
+                <div>
+                    <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line">
+                    <button class="delete-line" onclick="onRemoveInputText(this)">🗑️</button>
+                </div>
 
-            <a href="#" onclick="downloadCanvas(this)" download="meme">Download</a>
-            <button onclick="clearCanvas();clearText()">Clear Text</button>
-        </section>
+                <input class="color-text" onchange="changeTextColor(this.value)" type="color" value="#ffffff">
+                <input class="color-stroke" onchange="changeStrokeColor(this.value)" type="color" value="#000000">
 
-        <!-- Canvas -->
-        <section class="canvas">
-            <canvas height="500" width="500" id="edit-canvas"></canvas>
-        </section>
+                <!-- <button>➖</button>
+                <input class="text-size" type="text" oninput="changeText()">
+                <button>➕</button> -->
+
+                <div class="select-editable">
+                    <select onchange="this.nextElementSibling.value=this.value; onChangrFontSize()">
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="14">14</option>
+                        <option value="16">16</option>
+                        <option value="18">18</option>
+                </select>
+                    <input class="input-text-size" onchange="onChangrFontSize()" type="text" name="format" value="12" />
+                </div>
+
+                <select class="font-input" onchange="onSetFont(this.value)">
+                    <option value="impact">Impact</option>
+                    <option value="ubuntu">Ubuntu</option>
+                    <option value="Play">play</option>
+                    <option value="Inconsolata">inconsolata</option>
+                </select>
+
+                <a href="#" onclick="downloadCanvas(this)" download="meme">Download</a>
+                <button onclick="clearCanvas();clearText()">Clear all</button>
+            </section>
+
+            <!-- Canvas -->
+            <section class="canvas">
+                <canvas height="500" width="500" id="edit-canvas"></canvas>
+            </section>
+        </div>
     </main>
 
     <!-- Footer -->

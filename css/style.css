@@ -61,7 +61,8 @@ header {
     text-align: center;
 }
 
-h1,h3 {
+h1,
+h3 {
     margin: 0;
 }
 
@@ -120,9 +121,64 @@ main {
     display: none;
 }
 
+.input-bar {
+    max-width: 80vw;
+    margin: 0 auto;
+}
+
 canvas {
     background-color: rgb(196, 230, 255);
     border: 2px solid gold;
+}
+
+.delete-line img {
+    /* font-size: 10px; */
+    /* font-weight: bold; */
+    width: 14;
+    height: 14px;
+}
+
+
+/* .text-size {
+    width: 30px;
+} */
+
+.font-input {
+    width: 80px;
+}
+
+.select-editable {
+    position: relative;
+    background-color: white;
+    border: solid grey 1px;
+    width: 50px;
+    height: 24px;
+    display: inline-block;
+}
+
+.select-editable select {
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    font-size: 14px;
+    border: none;
+    width: 46px;
+    margin: 0;
+}
+
+.select-editable input {
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    width: 30px;
+    padding: 1px;
+    font-size: 12px;
+    border: none;
+}
+
+.select-editable select:focus,
+.select-editable input:focus {
+    outline: none;
 }
 
 
@@ -131,20 +187,17 @@ canvas {
 footer {
     background-color: rgb(241, 237, 237);
     /* height: 130px; */
-    width:100vw;
+    width: 100vw;
 }
 
 @media (min-width: 740px) {
     /* Nav */
-
     .nav-bar li {
         padding: 14px 16px;
     }
-
     .nav-bar li:hover {
         background-color: rgb(32, 45, 54);
     }
-
     .photo-gallery {
         margin: 0 auto;
         grid-template-columns: 1fr 1fr;
@@ -153,8 +206,6 @@ footer {
         height: 750px;
         max-width: 700px;
     }
-
-
 }
 
 @media (min-width: 1030px) {

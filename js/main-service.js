@@ -16,7 +16,9 @@ var gColorText = 'white';
 var gStrokeColor = 'black';
 
 var gCurrImg;
-var gFontSize = '50px impact-meme';
+var gFontFamily = 'impact-meme';
+var gFontSize = '50px';
+var gFont = gFontSize + ' ' + gFontFamily;
 
 var gImgs;
 var gMeme = {

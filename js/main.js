@@ -3,14 +3,15 @@
 function init() {
     gCanvas = document.getElementById('edit-canvas');
     gCtx = gCanvas.getContext('2d');
-    gCtx.font = gFontSize;
+    gCtx.font = gFont;
     createImgs();
     renderImgs();
+    setColors();
 }
 
 function renderImgs() {
     var imgs = getImgs();
-    var strHtml = imgs.map(function (img) {
+    var strHtml = imgs.map(function(img) {
         return `<img onclick="chooseImgFromGallery(this)" src="${img.url}" alt="img">`
     })
     $('.photo-gallery').html(strHtml.join(''));
@@ -89,7 +90,7 @@ function onFileInputChange(ev) {
 //UPLOAD IMG WITH INPUT FILE
 function handleImageFromInput(ev, onImageReady) {
     var reader = new FileReader();
-    reader.onload = function (event) {
+    reader.onload = function(event) {
         var img = new Image();
         img.onload = onImageReady.bind(null, img);
         img.src = event.target.result;
@@ -112,8 +113,14 @@ function clearCanvas() {
 function clearText() {
     $('.line-text-up').val('');
     $('.line-text-down').val('');
+
     gColorText = 'white';
+    $('.color-text').val('#ffffff');
+    saveToStorage('textColor', gColorText);
+
     gStrokeColor = 'black';
+    $('.color-stroke').val('#000000');
+    saveToStorage('strokeColor', gStrokeColor);
 }
 
 function downloadCanvas(elLink) {
@@ -126,44 +133,55 @@ function changeText() {
     clearCanvas();
     renderCanvasGallery(gCurrImg);
 
-    var spaceLeft = gCanvas.width / 2;
-    gCtx.fillStyle = gColorText;
+    gFont = gFontSize + ' ' + gFontFamily;
     gCtx.textAlign = 'center';
-    gCtx.font = gFontSize;
-    gCtx.color = gColorText;
+    gCtx.font = gFont;
     gCtx.lineWidth = 3;
+    gCtx.fillStyle = gColorText;
     gCtx.strokeStyle = gStrokeColor;
+
+    var spaceLeft = gCanvas.width / 2;
 
     var spaceInputUp = 60;
     var elUp = $('.line-text-up').val();
-    gCtx.fillText(elUp, spaceLeft, spaceInputUp);
-    gCtx.strokeText(elUp, spaceLeft, spaceInputUp);
-
+    if (elUp) {
+        gCtx.fillText(elUp, spaceLeft, spaceInputUp);
+        gCtx.strokeText(elUp, spaceLeft, spaceInputUp);
+    }
     var spaceInputDown = gHeightImg - 20;
     var elDown = $('.line-text-down').val();
-    gCtx.fillText(elDown, spaceLeft, spaceInputDown);
-    gCtx.strokeText(elDown, spaceLeft, spaceInputDown);
+    if (elUp) {
+        gCtx.fillText(elDown, spaceLeft, spaceInputDown);
+        gCtx.strokeText(elDown, spaceLeft, spaceInputDown);
+    }
 
 }
 
 function changeTextColor(textColor) {
     gColorText = textColor;
     changeText();
+    saveToStorage('textColor', textColor);
 }
 
 function changeStrokeColor(strokeColor) {
     gStrokeColor = strokeColor;
     changeText();
+    saveToStorage('strokeColor', strokeColor);
 }
 
 function setColors() {
-    var backColor = loadFromStorage('backgroundColor');
-    $('body').css('backgroundColor', backColor);
-    $('.color-back').val(backColor);
+    var stokeColor = loadFromStorage('strokeColor');
+    gStrokeColor = stokeColor;
+    $('.color-stroke').val(stokeColor);
 
-    var textColor = loadFromStorage('color');
-    $('body').css('color', textColor);
-    $('.color-text').val(textColor);
+    var textColor = loadFromStorage('textColor');
+    if (textColor) {
+        gColorText = textColor;
+        $('.color-text').val(textColor);
+    } else {
+        gColorText = 'white';
+        $('.color-text').val('#ffffff');
+    }
 }
 
 function onNextPage() {
@@ -174,4 +192,15 @@ function onNextPage() {
 function onPrevPage() {
     prevPage();
     renderImgs();
+}
+
+function onChangrFontSize() {
+    var newSize = $('.input-text-size').val();
+    gFontSize = newSize * 4 + 'px';
+    changeText();
+}
+
+function onRemoveInputText(elBtn) {
+    var textDiv = elBtn.parentElement;
+    textDiv.innerHTML = '';
 }
