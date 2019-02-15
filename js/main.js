@@ -6,7 +6,7 @@ function init() {
     gCtx.font = gFont;
     createImgs();
     renderImgs();
-    setColors();
+    // setColors();
 }
 
 function renderImgs() {
@@ -133,55 +133,121 @@ function changeText() {
     clearCanvas();
     renderCanvasGallery(gCurrImg);
 
-    gFont = gFontSize + ' ' + gFontFamily;
     gCtx.textAlign = 'center';
-    gCtx.font = gFont;
     gCtx.lineWidth = 3;
-    gCtx.fillStyle = gColorText;
-    gCtx.strokeStyle = gStrokeColor;
 
     var spaceLeft = gCanvas.width / 2;
 
     var spaceInputUp = 60;
     var elUp = $('.line-text-up').val();
     if (elUp) {
+        gCtx.font = gFont[0];
+        gCtx.fillStyle = gColorText[0];
+        gCtx.strokeStyle = gStrokeColor[0];
         gCtx.fillText(elUp, spaceLeft, spaceInputUp);
         gCtx.strokeText(elUp, spaceLeft, spaceInputUp);
     }
     var spaceInputDown = gHeightImg - 20;
     var elDown = $('.line-text-down').val();
-    if (elUp) {
+    if (elDown) {
+        gCtx.font = gFont[1];
+        gCtx.fillStyle = gColorText[1];
+        gCtx.strokeStyle = gStrokeColor[1];
         gCtx.fillText(elDown, spaceLeft, spaceInputDown);
         gCtx.strokeText(elDown, spaceLeft, spaceInputDown);
     }
 
-}
-
-function changeTextColor(textColor) {
-    gColorText = textColor;
-    changeText();
-    saveToStorage('textColor', textColor);
-}
-
-function changeStrokeColor(strokeColor) {
-    gStrokeColor = strokeColor;
-    changeText();
-    saveToStorage('strokeColor', strokeColor);
-}
-
-function setColors() {
-    var stokeColor = loadFromStorage('strokeColor');
-    gStrokeColor = stokeColor;
-    $('.color-stroke').val(stokeColor);
-
-    var textColor = loadFromStorage('textColor');
-    if (textColor) {
-        gColorText = textColor;
-        $('.color-text').val(textColor);
-    } else {
-        gColorText = 'white';
-        $('.color-text').val('#ffffff');
+    for (var i = 2; i < gLineNumber; i++) {
+        gCtx.font = gFont[i];
+        gCtx.fillStyle = gColorText[i];
+        gCtx.strokeStyle = gStrokeColor[i];
+        var classToChange = '.line-text-' + (i + 1);
+        var elNewLine = $(classToChange).val();
+        if (elNewLine) {
+            gCtx.fillText(elNewLine, spaceLeft, gCanvas.height / 2);
+            gCtx.strokeText(elNewLine, spaceLeft, gCanvas.height / 2);
+        }
     }
+
+}
+
+function changeTextColor(textColor, number) {
+    gColorText[number - 1] = textColor;
+    changeText();
+    // saveToStorage('textColor', textColor);
+}
+
+function changeStrokeColor(strokeColor, number) {
+    gStrokeColor[number - 1] = strokeColor;
+    changeText();
+    // saveToStorage('strokeColor', strokeColor);
+}
+
+function onChangeFontSize(number) {
+    var classToChange = '.input-text-size-' + number;
+    var newSize = $(classToChange).val();
+    gFontSize[number - 1] = newSize * 4 + 'px';
+    gFont[number - 1] = gFontSize[number - 1] + ' ' + gFontFamily[number - 1];
+    changeText();
+}
+
+function onRemoveInputText(elBtn, number) {
+    var textDiv = elBtn.parentElement;
+    textDiv.innerHTML = '';
+    // gStrLines.splice((number - 1), 1);
+    gStrLines[number - 1] = '';
+}
+
+function onSetFont(newFont, number) {
+    var classToChange = '.font-input-' + number;
+    gFontFamily[number - 1] = newFont;
+    gFont[number - 1] = gFontSize[number - 1] + ' ' + gFontFamily[number - 1];
+
+    changeText();
+}
+
+function onRenderNewLine() {
+    gLineNumber++;
+
+    var strLine = `
+    <div>
+                    <input class="line-text-${gLineNumber}" oninput="changeText()" type="text" placeholder="write line">
+                    <button class="delete-line" onclick="onRemoveInputText(this,${gLineNumber})">🗑️</button>
+                    <input class="color-text-${gLineNumber}" onchange="changeTextColor(this.value,${gLineNumber})" type="color" value="#ffffff">
+                    <input class="color-stroke-${gLineNumber}" onchange="changeStrokeColor(this.value,${gLineNumber})" type="color" value="#000000">
+                    <div class="select-editable">
+                        <select onchange="this.nextElementSibling.value=this.value; onChangeFontSize(${gLineNumber})">
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="14">14</option>
+                            <option value="16">16</option>
+                            <option value="18">18</option>
+                            </select>
+                        <input class="input-text-size-${gLineNumber}" onchange="onChangeFontSize(${gLineNumber})" type="text" name="format" value="12" />
+                    </div>
+                    <select class="font-input-${gLineNumber}" onchange="onSetFont(this.value,${gLineNumber})">
+                        <option value="impact">Impact</option>
+                        <option value="ubuntu">Ubuntu</option>
+                        <option value="Play">play</option>
+                        <option value="Inconsolata">inconsolata</option>
+                    </select>
+                </div>
+    `;
+
+    gStrLines.push(strLine);
+
+    $('.new-lines').html(gStrLines.join(''));
+
+    gColorText.push('white');
+    gStrokeColor.push('black');
+
+    gFontSize.push('50px');
+    gFontFamily.push('impact-meme');
+    gFont.push('50px impact-meme');
+
 }
 
 function onNextPage() {
@@ -194,13 +260,20 @@ function onPrevPage() {
     renderImgs();
 }
 
-function onChangrFontSize() {
-    var newSize = $('.input-text-size').val();
-    gFontSize = newSize * 4 + 'px';
-    changeText();
-}
 
-function onRemoveInputText(elBtn) {
-    var textDiv = elBtn.parentElement;
-    textDiv.innerHTML = '';
-}
+
+
+// function setColors() {
+//     var stokeColor = loadFromStorage('strokeColor');
+//     gStrokeColor = stokeColor;
+//     $('.color-stroke').val(stokeColor);
+
+//     var textColor = loadFromStorage('textColor');
+//     if (textColor) {
+//         gColorText = textColor;
+//         $('.color-text').val(textColor);
+//     } else {
+//         gColorText = 'white';
+//         $('.color-text').val('#ffffff');
+//     }
+// }

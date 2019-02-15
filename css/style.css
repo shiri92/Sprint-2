@@ -122,7 +122,7 @@ main {
 }
 
 .input-bar {
-    max-width: 80vw;
+    max-width: 500px;
     margin: 0 auto;
 }
 
@@ -152,6 +152,7 @@ canvas {
     background-color: white;
     border: solid grey 1px;
     width: 50px;
+    top: 8px;
     height: 24px;
     display: inline-block;
 }

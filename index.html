@@ -10,8 +10,6 @@
     <link rel="icon" href="img/icon.png">
 
     <!-- Custom styles -->
-    <!-- <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -48,53 +46,76 @@
     <main class="main-edit">
         <!-- Inputs -->
         <div class="edit-conainer">
-            <section class="input-bar flex space-even wrap">
-
-                <div>
-                    <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line">
-                    <button class="delete-line" onclick="onRemoveInputText(this)">🗑️</button>
-                </div>
-                <div>
-                    <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line">
-                    <button class="delete-line" onclick="onRemoveInputText(this)">🗑️</button>
-                </div>
-
-                <input class="color-text" onchange="changeTextColor(this.value)" type="color" value="#ffffff">
-                <input class="color-stroke" onchange="changeStrokeColor(this.value)" type="color" value="#000000">
-
-                <!-- <button>➖</button>
-                <input class="text-size" type="text" oninput="changeText()">
-                <button>➕</button> -->
-
-                <div class="select-editable">
-                    <select onchange="this.nextElementSibling.value=this.value; onChangrFontSize()">
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="14">14</option>
-                        <option value="16">16</option>
-                        <option value="18">18</option>
-                </select>
-                    <input class="input-text-size" onchange="onChangrFontSize()" type="text" name="format" value="12" />
-                </div>
-
-                <select class="font-input" onchange="onSetFont(this.value)">
-                    <option value="impact">Impact</option>
-                    <option value="ubuntu">Ubuntu</option>
-                    <option value="Play">play</option>
-                    <option value="Inconsolata">inconsolata</option>
-                </select>
-
-                <a href="#" onclick="downloadCanvas(this)" download="meme">Download</a>
-                <button onclick="clearCanvas();clearText()">Clear all</button>
-            </section>
 
             <!-- Canvas -->
             <section class="canvas">
                 <canvas height="500" width="500" id="edit-canvas"></canvas>
             </section>
+
+            <section class="input-bar flex space-even wrap flex-col">
+
+                <div>
+                    <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line">
+                    <button class="delete-line" onclick="onRemoveInputText(this)">🗑️</button>
+                    <input class="color-text" onchange="changeTextColor(this.value,1)" type="color" value="#ffffff">
+                    <input class="color-stroke" onchange="changeStrokeColor(this.value,1)" type="color" value="#000000">
+                    <div class="select-editable">
+                        <select onchange="this.nextElementSibling.value=this.value; onChangeFontSize(1)">
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="14">14</option>
+                            <option value="16">16</option>
+                            <option value="18">18</option>
+                        </select>
+                        <input class="input-text-size" onchange="onChangeFontSize(1)" type="text" name="format" value="12" />
+                    </div>
+                    <select class="font-input" onchange="onSetFont(this.value,1)">
+                        <option value="impact-meme">Impact</option>
+                        <option value="ubuntu">Ubuntu</option>
+                        <option value="play">Play</option>
+                        <option value="inconsolata">Inconsolata</option>
+                    </select>
+                </div>
+
+                <div>
+                    <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line">
+                    <button class="delete-line" onclick="onRemoveInputText(this)">🗑️</button>
+                    <input class="color-text" onchange="changeTextColor(this.value,2)" type="color" value="#ffffff">
+                    <input class="color-stroke" onchange="changeStrokeColor(this.value,2)" type="color" value="#000000">
+                    <div class="select-editable">
+                        <select onchange="this.nextElementSibling.value=this.value; onChangeFontSize(2)">
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="14">14</option>
+                            <option value="16">16</option>
+                            <option value="18">18</option>
+                            </select>
+                        <input class="input-text-size" onchange="onChangeFontSize(2)" type="text" name="format" value="12" />
+                    </div>
+                    <select class="font-input" onchange="onSetFont(this.value,2)">
+                        <option value="impact">Impact</option>
+                        <option value="ubuntu">Ubuntu</option>
+                        <option value="Play">play</option>
+                        <option value="Inconsolata">inconsolata</option>
+                    </select>
+                </div>
+
+                <div class="new-lines"></div>
+
+                <button onclick="onRenderNewLine()">Add new line</button>
+
+                <button onclick="clearCanvas();clearText()">Clear all</button>
+
+                <a href="#" onclick="downloadCanvas(this)" download="meme">Download</a>
+            </section>
+
+
         </div>
     </main>
 

@@ -12,13 +12,16 @@ var gHeightImg = 500;
 var gWidthWindow = 500;
 var gHeightWindow = 500;
 
-var gColorText = 'white';
-var gStrokeColor = 'black';
+var gColorText = ['white', 'white'];
+var gStrokeColor = ['black', 'black'];
+
+var gLineNumber = 2;
+var gStrLines = [];
 
 var gCurrImg;
-var gFontFamily = 'impact-meme';
-var gFontSize = '50px';
-var gFont = gFontSize + ' ' + gFontFamily;
+var gFontFamily = ['impact-meme', 'impact-meme'];
+var gFontSize = ['50px', '50px'];
+var gFont = [gFontSize[0] + ' ' + gFontFamily[0], gFontSize[1] + ' ' + gFontFamily[1]];
 
 var gImgs;
 var gMeme = {
