@@ -41,6 +41,7 @@ function moveToEdit() {
     if (isFirstEdit) {
         onRenderNewLine();
         onRenderNewLine();
+        $('.line-text-1').focus();
         isFirstEdit = false;
     }
 }
@@ -49,43 +50,44 @@ function moveToEdit() {
 
 function renderCanvasGallery(img) {
     // debugger;
-    gCurrImg = img;
-    gWidthImg = img.naturalWidth;
-    gHeightImg = img.naturalHeight;
-    gWidthWindow = $(window).innerWidth();
-    gHeightWindow = $(window).innerHeight(); ////////////////////////////////לבדוק וינדואו פחות הקנבס 
-    var headerH = $('header').innerHeight();
-    var titleH = $('.title-container').innerHeight();
-    var inputsH = $('.input-bar').innerHeight();
-    var footerH = $('footer').innerHeight();
-    var sum = headerH + titleH + inputsH + footerH;
+    if (img) {
+        gCurrImg = img;
+        gWidthImg = img.naturalWidth;
+        gHeightImg = img.naturalHeight;
+        gWidthWindow = $(window).innerWidth();
+        gHeightWindow = $(window).innerHeight(); ////////////////////////////////לבדוק וינדואו פחות הקנבס 
+        var headerH = $('header').innerHeight();
+        var titleH = $('.title-container').innerHeight();
+        var inputsH = $('.input-bar').innerHeight();
+        var footerH = $('footer').innerHeight();
+        var sum = headerH + titleH + inputsH + footerH;
 
-    gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow;
-    gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4;
+        gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow;
+        gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4;
 
-    var wRatio = gCanvas.width / gWidthImg;
-    var hRatio = gCanvas.height / gHeightImg;
-    var ratio = Math.min(wRatio, hRatio);
-    if (ratio === wRatio) {
-        var left = 0;
-        if (hRatio === 1) {
-            var top = (1 - ratio) * gCanvas.height / 2;
-        } else {
-            var top = (1 - (wRatio / hRatio)) * gCanvas.height / 2;
-        }
-        gTopInput = top;
-    } else {
-        if (ratio === hRatio) {
-            var top = 0;
-            if (wRatio === 1) {
-                var left = (1 - ratio) * gCanvas.width / 2;
+        var wRatio = gCanvas.width / gWidthImg;
+        var hRatio = gCanvas.height / gHeightImg;
+        var ratio = Math.min(wRatio, hRatio);
+        if (ratio === wRatio) {
+            var left = 0;
+            if (hRatio === 1) {
+                var top = (1 - ratio) * gCanvas.height / 2;
             } else {
-                var left = (1 - (hRatio / wRatio)) * gCanvas.width / 2;
+                var top = (1 - (wRatio / hRatio)) * gCanvas.height / 2;
+            }
+            gTopInput = top;
+        } else {
+            if (ratio === hRatio) {
+                var top = 0;
+                if (wRatio === 1) {
+                    var left = (1 - ratio) * gCanvas.width / 2;
+                } else {
+                    var left = (1 - (hRatio / wRatio)) * gCanvas.width / 2;
+                }
             }
         }
+        gCtx.drawImage(img, left, top, gWidthImg * ratio, gHeightImg * ratio);
     }
-    gCtx.drawImage(img, left, top, gWidthImg * ratio, gHeightImg * ratio);
-
 }
 
 // Select img to upload
@@ -126,62 +128,101 @@ function downloadCanvas(elLink) {
 }
 
 function changeText() {
-
     clearCanvas();
     renderCanvasGallery(gCurrImg);
+    drawLines();
+    printInputsRect();
+}
 
+function printInputsRect() {
+    for (var i = 0; i < gLineNumber; i++) {
+        var lineLength = (gCtx.measureText(gMainLines[i]['inputs']['val']).width);
+        if (lineLength === 0 || lineLength === 201.2578125) {
+            gCtx.lineWidth = '0';
+            lineLength = 0;
+        } else {
+            gCtx.lineWidth = '2';
+            lineLength += 6;
+            var lineHeight = gMainLines[i]['font-size'] * 4 + 2;
+            var lineTop = gMainLines[i]['inputs']['top'] - lineHeight + 8;
+            var lineLeft = (gCanvas.width / 2) - (lineLength / 2);
+            gCtx.beginPath();
+            gCtx.strokeStyle = 'rgb(36, 36, 36)';
+            gCtx.rect(lineLeft, lineTop, lineLength, lineHeight);
+            gCtx.stroke();
+        }
+    }
+}
+
+function drawLines() {
     gCtx.textAlign = 'center';
     gCtx.lineWidth = 3;
     var spaceLeft = gCanvas.width / 2;
-
     for (var i = 0; i < gLineNumber; i++) {
         gCtx.font = gFont[i];
-        gCtx.fillStyle = gTextColor[i];
-        gCtx.strokeStyle = gStrokeColor[i];
+        // gCtx.fillStyle = gTextColor[i];
+        gCtx.fillStyle = gMainLines[i]['text-color'];
+        // gCtx.strokeStyle = gStrokeColor[i];
+        gCtx.strokeStyle = gMainLines[i]['stroke-color'];
+
         var classToChange = '.line-text-' + (i + 1);
+
+        var inputLocation = changeLocatinAndPlaceholder(classToChange, i);
         var valNewLine = $(classToChange).val();
-        if (i === 0 || i === 1) {
-            if (!i) {
-                var inputLocation = 50 + gTopInput;
-                $(classToChange).attr('placeholder', 'write first line✍');
-            } else {
-                var inputLocation = gCanvas.height - 10 - gTopInput;
-                $(classToChange).attr('placeholder', 'write second line✍');
-            }
-        } else {
-            var inputLocation = gCanvas.height / 2;
-            $(classToChange).attr('placeholder', 'write line ' + (i + 1) + ' ✍');
-        }
+
         if (valNewLine) {
             gCtx.fillText(valNewLine, spaceLeft, inputLocation);
             gCtx.strokeText(valNewLine, spaceLeft, inputLocation);
         }
-        gInputs[i] = valNewLine;
+        // gInputs[i] = valNewLine;
+        gMainLines[i]['inputs']['val'] = valNewLine;
+        gMainLines[i]['inputs']['width'] = gCtx.measureText(valNewLine).width;
+        gMainLines[i]['inputs']['top'] = inputLocation;
     }
+}
 
+function changeLocatinAndPlaceholder(classToChange, i) {
+    if (i === 0 || i === 1) {
+        if (!i) {
+            $(classToChange).attr('placeholder', 'write first line✍');
+            return 50 + gTopInput;
+        } else {
+            $(classToChange).attr('placeholder', 'write second line✍');
+            return gCanvas.height - 10 - gTopInput;
+        }
+    } else {
+        $(classToChange).attr('placeholder', 'write line ' + (i + 1) + ' ✍');
+        return gCanvas.height / 2;
+    }
 }
 
 function changeTextColor(textColor, number) {
-    gTextColor[number - 1] = textColor;
+    // gTextColor[number - 1] = textColor;
+    gMainLines[number - 1]['text-color'] = textColor;
     changeText();
 }
 
 function changeStrokeColor(strokeColor, number) {
-    gStrokeColor[number - 1] = strokeColor;
+    // gStrokeColor[number - 1] = strokeColor;
+    gMainLines[number - 1]['stroke-color'] = strokeColor;
     changeText();
 }
 
 function onChangeFontSize(number) {
     var classToChange = '.input-text-size-' + number;
-    gFontSize[number - 1] = $(classToChange).val();
-    gFont[number - 1] = (gFontSize[number - 1] * 4) + 'px ' + gFontFamily[number - 1];
+    // gFontSize[number - 1] = $(classToChange).val();
+    gMainLines[number - 1]['font-size'] = $(classToChange).val();
+    // gFont[number - 1] = (gFontSize[number - 1] * 4) + 'px ' + gFontFamily[number - 1];
+    gFont[number - 1] = (gMainLines[number - 1]['font-size'] * 4) + 'px ' + gMainLines[number - 1]['font-family'];
     changeText();
 }
 
 
 function onSetFontFamily(newFont, number) {
-    gFontFamily[number - 1] = newFont;
-    gFont[number - 1] = (gFontSize[number - 1] * 4) + 'px ' + gFontFamily[number - 1];
+    // gFontFamily[number - 1] = newFont;
+    gMainLines[number - 1]['font-family'] = newFont;
+    // gFont[number - 1] = (gFontSize[number - 1] * 4) + 'px ' + gFontFamily[number - 1];
+    gFont[number - 1] = (gMainLines[number - 1]['font-size'] * 4) + 'px ' + gMainLines[number - 1]['font-family'];
     changeText();
 }
 
@@ -189,32 +230,50 @@ function onRemoveInputText(elBtn, number) {
     var textDiv = elBtn.parentElement;
     textDiv.innerHTML = '';
     gStrLines[number - 1] = '';
+    gMainLines[number - 1]['inputs']['width'] = '';
     changeText();
 }
 
 function updateStrLinesValue(isClear) {
     for (var i = 0; i < gStrLines.length; i++) {
 
+        if (isClear) {
+            gMainLines[i]['inputs']['val'] = '';
+            gMainLines[i]['inputs']['width'] = 0;
+            gMainLines[i]['inputs']['top'] = 0;
+            gMainLines[i]['text-color'] = '#ffffff';
+            gMainLines[i]['stroke-color'] = '#000000';
+            gMainLines[i]['font-size'] = 12;
+            gMainLines[i]['font-family'] = 'impact';
+        }
+
         var classToUpdate = '.line-text-' + (i + 1);
-        $(classToUpdate).val((isClear) ? '' : gInputs[i]);
+        // $(classToUpdate).val((isClear) ? '' : gInputs[i]);
+        $(classToUpdate).val(gMainLines[i]['inputs']['val']);
 
         classToUpdate = '.color-text-' + (i + 1);
-        $(classToUpdate).val((isClear) ? '#ffffff' : gTextColor[i]);
+        // $(classToUpdate).val((isClear) ? '#ffffff' : gTextColor[i]);
+        $(classToUpdate).val(gMainLines[i]['text-color']);
 
         classToUpdate = '.color-stroke-' + (i + 1);
-        $(classToUpdate).val((isClear) ? '#000000' : gStrokeColor[i]);
+        // $(classToUpdate).val((isClear) ? '#000000' : gStrokeColor[i]);
+        $(classToUpdate).val(gMainLines[i]['stroke-color']);
 
         classToUpdate = '.input-text-size-' + (i + 1);
-        $(classToUpdate).val((isClear) ? 12 : gFontSize[i]);
+        // $(classToUpdate).val((isClear) ? 12 : gFontSize[i]);
+        $(classToUpdate).val(gMainLines[i]['font-size']);
 
         classToUpdate = '.input-font-' + (i + 1);
-        $(classToUpdate).val((isClear) ? 'impact' : gFontFamily[i]);
+        // $(classToUpdate).val((isClear) ? 'impact' : gFontFamily[i]);
+        $(classToUpdate).val(gMainLines[i]['font-family']);
 
-        gInputs[i] = '';
-        gTextColor[i] = '#ffffff';
-        gStrokeColor[i] = '#000000';
-        gFontSize[i] = 12;
-        gFontFamily[i] = 'impact';
+        // if (isClear) {
+        //     gInputs[i] = '';
+        //     gTextColor[i] = '#ffffff';
+        //     gStrokeColor[i] = '#000000';
+        //     gFontSize[i] = 12;
+        //     gFontFamily[i] = 'impact';
+        // }
     }
 }
 
@@ -251,14 +310,24 @@ function onRenderNewLine() {
 
     $('.new-lines').html(gStrLines.join(''));
 
-    gInputs.push('');
+    // gInputs.push('');
+    // gTextColor.push('#ffffff');
+    // gStrokeColor.push('#000000');
+    // gFontSize.push(12);
+    // gFontFamily.push('impact');
 
-    gTextColor.push('#ffffff');
-    gStrokeColor.push('#000000');
+    gMainLines.push({
+        inputs: { val: '', width: 0, top: 0 },
+        'text-color': '#ffffff',
+        'stroke-color': '#000000',
+        'font-size': 12,
+        'font-family': 'impact',
+    });
 
-    gFontSize.push(12);
-    gFontFamily.push('impact');
-    gFont.push((gFontSize[gLineNumber - 1] * 4) + 'px ' + gFontFamily[gLineNumber - 1]);
+    // gFont.push((gFontSize[gLineNumber - 1] * 4) + 'px ' + gFontFamily[gLineNumber - 1]);
+    gFont.push((gMainLines[gLineNumber - 1]['font-size'] * 4) + 'px ' + gMainLines[gLineNumber - 1]['font-family']);
+
+
 
     updateStrLinesValue(false);
 
