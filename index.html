@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Gallery</title>
+    <title>Sprint2!</title>
     <link rel="icon" href="img/icon.png">
 
     <!-- Custom styles -->
@@ -19,14 +19,14 @@
     <!-- Header and Navigation -->
     <header class="flex">
         <ul class="nav-bar">
-            <li onclick="checkPages('gallery')">Gallery</li>
-            <li onclick="checkPages('edit')">Edit</li>
+            <li onclick="checkPages('gallery')">Gallery🎞</li>
+            <li onclick="checkPages('edit')">Edit🖊</li>
         </ul>
     </header>
 
     <!-- Title Gallery -->
     <div class="title-container">
-        <h1 class="title">Gallery</h1>
+        <h1 class="title">Gallery🎞</h1>
     </div>
 
     <!----------------------- Main Gallery --------------------->
@@ -37,8 +37,8 @@
         </section>
 
 
-        <button onclick="onPrevPage()">Prev page</button>
-        <button onclick="onNextPage()">Next page</button>
+        <button onclick="onPrevPage()">🡄 Prev page</button>
+        <button onclick="onNextPage()">Next page 🡆</button>
 
     </main>
 
@@ -55,7 +55,7 @@
             <section class="input-bar flex space-even wrap flex-col">
 
                 <div>
-                    <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line">
+                    <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line✍">
                     <button class="delete-line" onclick="onRemoveInputText(this)">🗑️</button>
                     <input class="color-text" onchange="changeTextColor(this.value,1)" type="color" value="#ffffff">
                     <input class="color-stroke" onchange="changeStrokeColor(this.value,1)" type="color" value="#000000">
@@ -70,10 +70,10 @@
                             <option value="16">16</option>
                             <option value="18">18</option>
                         </select>
-                        <input class="input-text-size" onchange="onChangeFontSize(1)" type="text" name="format" value="12" />
+                        <input class="input-text-size-1" onchange="onChangeFontSize(1)" type="text" name="format" value="12" />
                     </div>
-                    <select class="font-input" onchange="onSetFont(this.value,1)">
-                        <option value="impact-meme">Impact</option>
+                    <select class="input-font-1" onchange="onSetFontFamily(this.value,1)">
+                        <option value="impact">Impact</option>
                         <option value="ubuntu">Ubuntu</option>
                         <option value="play">Play</option>
                         <option value="inconsolata">Inconsolata</option>
@@ -81,7 +81,7 @@
                 </div>
 
                 <div>
-                    <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line">
+                    <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line✍">
                     <button class="delete-line" onclick="onRemoveInputText(this)">🗑️</button>
                     <input class="color-text" onchange="changeTextColor(this.value,2)" type="color" value="#ffffff">
                     <input class="color-stroke" onchange="changeStrokeColor(this.value,2)" type="color" value="#000000">
@@ -96,9 +96,9 @@
                             <option value="16">16</option>
                             <option value="18">18</option>
                             </select>
-                        <input class="input-text-size" onchange="onChangeFontSize(2)" type="text" name="format" value="12" />
+                        <input class="input-text-size-2" onchange="onChangeFontSize(2)" type="text" name="format" value="12" />
                     </div>
-                    <select class="font-input" onchange="onSetFont(this.value,2)">
+                    <select class="input-font-2" onchange="onSetFontFamily(this.value,2)">
                         <option value="impact">Impact</option>
                         <option value="ubuntu">Ubuntu</option>
                         <option value="Play">play</option>
@@ -108,11 +108,11 @@
 
                 <div class="new-lines"></div>
 
-                <button onclick="onRenderNewLine()">Add new line</button>
+                <button onclick="onRenderNewLine()">Add new line 💫</button>
 
-                <button onclick="clearCanvas();clearText()">Clear all</button>
+                <button onclick="clearCanvas();clearText()">Clear all 💥</button>
 
-                <a href="#" onclick="downloadCanvas(this)" download="meme">Download</a>
+                <a href="#" onclick="downloadCanvas(this)" download="meme">Download 📥</a>
             </section>
 
 
@@ -122,7 +122,7 @@
     <!-- Footer -->
     <footer class="">
         <div>
-            <h3>I'm a footer</h3>
+            <h3>I'm a footer la la la lalala</h3>
         </div>
     </footer>
 
