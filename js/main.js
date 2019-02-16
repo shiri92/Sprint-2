@@ -66,27 +66,34 @@ function renderCanvasGallery(img) {
     } else {
         gCanvas.width = gWidthWindow;
     }
-    // dont delete! - its just shotcut to the long 'if' above
     // gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow;
     if (gHeightImg < gHeightWindow - sum) {
         gCanvas.height = gHeightImg;
     } else {
-        gCanvas.height = gHeightWindow - sum;
+        gCanvas.height = gHeightWindow - sum - 4;
     }
-    // dont delete! - its just shotcut to the long 'if' above
-    // gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum;
+    // gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4;
 
     var wRatio = gCanvas.width / gWidthImg;
     var hRatio = gCanvas.height / gHeightImg;
     var ratio = Math.min(wRatio, hRatio);
     if (ratio === wRatio) {
-        var top = (1 - ratio) * gCanvas.height / 2;
         var left = 0;
+        if (hRatio === 1) {
+            var top = (1 - ratio) * gCanvas.height / 2;
+        } else {
+            var top = (1 - (wRatio / hRatio)) * gCanvas.height / 2;
+        }
     } else {
-        var top = 0;
-        var left = (1 - ratio) * gCanvas.width / 2;
+        if (ratio === hRatio) {
+            var top = 0;
+            if (wRatio === 1) {
+                var left = (1 - ratio) * gCanvas.width / 2;
+            } else {
+                var left = (1 - (hRatio / wRatio)) * gCanvas.width / 2;
+            }
+        }
     }
-
     gCtx.drawImage(img, left, top, gWidthImg * ratio, gHeightImg * ratio);
 
     gTopInput = top;
@@ -221,6 +228,7 @@ function onRemoveInputText(elBtn, number) {
     textDiv.innerHTML = '';
     // gStrLines.splice((number - 1), 1);
     gStrLines[number - 1] = '';
+    changeText();
 }
 
 function updateStrLinesValue(isClear) {
@@ -287,6 +295,9 @@ function onRenderNewLine() {
     gFont.push((gFontSize[gLineNumber - 1] * 4) + 'px ' + gFontFamily[gLineNumber - 1]);
 
     updateStrLinesValue(false);
+
+    changeText();
+
 }
 
 function onNextPage() {
