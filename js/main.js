@@ -38,20 +38,17 @@ function moveToEdit() {
     $('.main-gallery').css('display', 'none');
     $('.main-edit').css('display', 'block');
     $('.title').html('Edit🖊');
-    onRenderNewLine();
-    onRenderNewLine();
+    if (isFirstEdit) {
+        onRenderNewLine();
+        onRenderNewLine();
+        isFirstEdit = false;
+    }
 }
 
-function renderCanvasUpload(img) {
-    gCurrImg = img;
-    gWidthImg = img.naturalWidth;
-    gHeightImg = img.naturalHeight;
-    gCanvas.width = img.width;
-    gCanvas.height = img.height;
-    gCtx.drawImage(img, 0, 0);
-}
+
 
 function renderCanvasGallery(img) {
+    // debugger;
     gCurrImg = img;
     gWidthImg = img.naturalWidth;
     gHeightImg = img.naturalHeight;
@@ -63,18 +60,8 @@ function renderCanvasGallery(img) {
     var footerH = $('footer').innerHeight();
     var sum = headerH + titleH + inputsH + footerH;
 
-    if (gWidthImg < gWidthWindow) {
-        gCanvas.width = gWidthImg;
-    } else {
-        gCanvas.width = gWidthWindow;
-    }
-    // gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow;
-    if (gHeightImg < gHeightWindow - sum) {
-        gCanvas.height = gHeightImg;
-    } else {
-        gCanvas.height = gHeightWindow - sum - 4;
-    }
-    // gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4;
+    gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow;
+    gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4;
 
     var wRatio = gCanvas.width / gWidthImg;
     var hRatio = gCanvas.height / gHeightImg;
@@ -103,12 +90,12 @@ function renderCanvasGallery(img) {
 
 // Select img to upload
 function onFileInputChange(ev) {
-    handleImageFromInput(ev, renderCanvasUpload);
+    handleImageFromUpload(ev, renderCanvasGallery);
     moveToEdit();
 }
 
 //UPLOAD IMG WITH INPUT FILE
-function handleImageFromInput(ev, onImageReady) {
+function handleImageFromUpload(ev, onImageReady) {
     var reader = new FileReader();
     reader.onload = function(event) {
         var img = new Image();
@@ -125,8 +112,7 @@ function chooseImgFromGallery(img) {
 }
 
 function clearCanvas() {
-    gCtx.clearRect(0, 0, gWidthImg, gHeightImg);
-    $("#canvasimg").css('display', 'none');
+    // gCtx.clearRect(0, 0, gWidthImg, gHeightImg);
     renderCanvasGallery(gCurrImg);
 }
 
@@ -150,7 +136,7 @@ function changeText() {
 
     for (var i = 0; i < gLineNumber; i++) {
         gCtx.font = gFont[i];
-        gCtx.fillStyle = gColorText[i];
+        gCtx.fillStyle = gTextColor[i];
         gCtx.strokeStyle = gStrokeColor[i];
         var classToChange = '.line-text-' + (i + 1);
         var valNewLine = $(classToChange).val();
@@ -176,15 +162,13 @@ function changeText() {
 }
 
 function changeTextColor(textColor, number) {
-    gColorText[number - 1] = textColor;
+    gTextColor[number - 1] = textColor;
     changeText();
-    // saveToStorage('textColor', textColor);
 }
 
 function changeStrokeColor(strokeColor, number) {
     gStrokeColor[number - 1] = strokeColor;
     changeText();
-    // saveToStorage('strokeColor', strokeColor);
 }
 
 function onChangeFontSize(number) {
@@ -204,7 +188,6 @@ function onSetFontFamily(newFont, number) {
 function onRemoveInputText(elBtn, number) {
     var textDiv = elBtn.parentElement;
     textDiv.innerHTML = '';
-    // gStrLines.splice((number - 1), 1);
     gStrLines[number - 1] = '';
     changeText();
 }
@@ -216,7 +199,7 @@ function updateStrLinesValue(isClear) {
         $(classToUpdate).val((isClear) ? '' : gInputs[i]);
 
         classToUpdate = '.color-text-' + (i + 1);
-        $(classToUpdate).val((isClear) ? '#ffffff' : gColorText[i]);
+        $(classToUpdate).val((isClear) ? '#ffffff' : gTextColor[i]);
 
         classToUpdate = '.color-stroke-' + (i + 1);
         $(classToUpdate).val((isClear) ? '#000000' : gStrokeColor[i]);
@@ -226,6 +209,12 @@ function updateStrLinesValue(isClear) {
 
         classToUpdate = '.input-font-' + (i + 1);
         $(classToUpdate).val((isClear) ? 'impact' : gFontFamily[i]);
+
+        gInputs[i] = '';
+        gTextColor[i] = '#ffffff';
+        gStrokeColor[i] = '#000000';
+        gFontSize[i] = 12;
+        gFontFamily[i] = 'impact';
     }
 }
 
@@ -233,31 +222,30 @@ function onRenderNewLine() {
     gLineNumber++;
     var strLine = `
     <div>
-                    <input class="line-text-${gLineNumber}" oninput="changeText()" type="text" placeholder="write line✍">
-                    <button class="delete-line" onclick="onRemoveInputText(this,${gLineNumber})">🗑️</button>
-                    <input class="color-text-${gLineNumber}" onchange="changeTextColor(this.value,${gLineNumber})" type="color" value="#ffffff">
-                    <input class="color-stroke-${gLineNumber}" onchange="changeStrokeColor(this.value,${gLineNumber})" type="color" value="#000000">
-                    <div class="select-editable">
-                        <select onchange="this.nextElementSibling.value=this.value; onChangeFontSize(${gLineNumber})">
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="14">14</option>
-                            <option value="16">16</option>
-                            <option value="18">18</option>
-                            </select>
-                        <input class="input-text-size-${gLineNumber}" onchange="onChangeFontSize(${gLineNumber})" type="text" name="format" value="12" />
-                    </div>
-                    <select class="input-font-${gLineNumber}" onchange="onSetFontFamily(this.value,${gLineNumber})">
-                        <option value="impact">Impact</option>
-                        <option value="ubuntu">Ubuntu</option>
-                        <option value="Play">play</option>
-                        <option value="Inconsolata">inconsolata</option>
-                    </select>
-                </div>
-    `;
+        <input class="line-text-${gLineNumber}" oninput="changeText()" type="text" placeholder="write line✍">
+        <button class="delete-line" onclick="onRemoveInputText(this,${gLineNumber})">🗑️</button>
+        <input class="color-text-${gLineNumber}" onchange="changeTextColor(this.value,${gLineNumber})" type="color" value="#ffffff">
+        <input class="color-stroke-${gLineNumber}" onchange="changeStrokeColor(this.value,${gLineNumber})" type="color" value="#000000">
+        <div class="select-editable">
+            <select onchange="this.nextElementSibling.value=this.value; onChangeFontSize(${gLineNumber})">
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="14">14</option>
+                <option value="16">16</option>
+                <option value="18">18</option>
+                </select>
+            <input class="input-text-size-${gLineNumber}" onchange="onChangeFontSize(${gLineNumber})" type="text" name="format" value="12" />
+        </div>
+        <select class="input-font-${gLineNumber}" onchange="onSetFontFamily(this.value,${gLineNumber})">
+            <option value="impact">Impact</option>
+            <option value="ubuntu">Ubuntu</option>
+            <option value="Play">play</option>
+            <option value="Inconsolata">inconsolata</option>
+        </select>
+    </div>`;
 
     gStrLines.push(strLine);
 
@@ -265,7 +253,7 @@ function onRenderNewLine() {
 
     gInputs.push('');
 
-    gColorText.push('#ffffff');
+    gTextColor.push('#ffffff');
     gStrokeColor.push('#000000');
 
     gFontSize.push(12);
@@ -275,7 +263,6 @@ function onRenderNewLine() {
     updateStrLinesValue(false);
 
     changeText();
-
 }
 
 function onNextPage() {
@@ -287,21 +274,3 @@ function onPrevPage() {
     prevPage();
     renderImgs();
 }
-
-
-
-
-// function setColors() {
-//     var stokeColor = loadFromStorage('strokeColor');
-//     gStrokeColor = stokeColor;
-//     $('.color-stroke').val(stokeColor);
-
-//     var textColor = loadFromStorage('textColor');
-//     if (textColor) {
-//         gColorText = textColor;
-//         $('.color-text').val(textColor);
-//     } else {
-//         gColorText = 'white';
-//         $('.color-text').val('#ffffff');
-//     }
-// }

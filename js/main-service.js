@@ -6,26 +6,36 @@ var gCtx;
 const PAGE_SIZE = 6;
 var currPageIdx = 0;
 
+var gCurrImg;
 var gWidthImg = 500;
 var gHeightImg = 500;
 
 var gWidthWindow = 500;
 var gHeightWindow = 500;
 
-
 var gLineNumber = 0;
-var gStrLines = [];
-
-var gInputs = [];
 
 var gTopInput;
 
-var gColorText = [];
+var gStrLines = [];
+var gInputs = [];
+var gTextColor = [];
 var gStrokeColor = [];
-var gCurrImg;
 var gFontFamily = [];
 var gFontSize = [];
 var gFont = [];
+
+// var gMainLines = {
+//     lines: [],
+//     inputs: [],
+//     'text-color': [],
+//     'stroke-color': [],
+//     'font-family': [],
+//     'font-size': [],
+//     'all-font': [],
+// }
+
+var isFirstEdit = true;
 
 var gImgs;
 var gMeme = {
