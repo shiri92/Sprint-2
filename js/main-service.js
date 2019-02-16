@@ -12,20 +12,20 @@ var gHeightImg = 500;
 var gWidthWindow = 500;
 var gHeightWindow = 500;
 
-var gColorText = ['#ffffff', '#ffffff'];
-var gStrokeColor = ['#000000', '#000000'];
 
-var gLineNumber = 2;
-var gStrLines = ['', ''];
+var gLineNumber = 0;
+var gStrLines = [];
 
 var gInputs = [];
 
-var gTopInput = 0;
+var gTopInput;
 
+var gColorText = [];
+var gStrokeColor = [];
 var gCurrImg;
-var gFontFamily = ['impact', 'impact'];
-var gFontSize = [12, 12];
-var gFont = [(gFontSize[0] * 4) + 'px ' + gFontFamily[0], (gFontSize[1] * 4) + 'px ' + gFontFamily[1]];
+var gFontFamily = [];
+var gFontSize = [];
+var gFont = [];
 
 var gImgs;
 var gMeme = {

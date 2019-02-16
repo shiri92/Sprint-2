@@ -10,6 +10,7 @@ function init() {
     $(window).resize(function() {
         changeText();
     });
+
 }
 
 function renderImgs() {
@@ -25,7 +26,6 @@ function checkPages(val) {
         $('.main-gallery').css('display', 'block');
         $('.main-edit').css('display', 'none');
         $('.title').html('Gallery🎞');
-
     }
     if (val === 'edit') {
         $('.main-gallery').css('display', 'none');
@@ -38,6 +38,8 @@ function moveToEdit() {
     $('.main-gallery').css('display', 'none');
     $('.main-edit').css('display', 'block');
     $('.title').html('Edit🖊');
+    onRenderNewLine();
+    onRenderNewLine();
 }
 
 function renderCanvasUpload(img) {
@@ -54,7 +56,7 @@ function renderCanvasGallery(img) {
     gWidthImg = img.naturalWidth;
     gHeightImg = img.naturalHeight;
     gWidthWindow = $(window).innerWidth();
-    gHeightWindow = $(window).innerHeight();
+    gHeightWindow = $(window).innerHeight(); ////////////////////////////////לבדוק וינדואו פחות הקנבס 
     var headerH = $('header').innerHeight();
     var titleH = $('.title-container').innerHeight();
     var inputsH = $('.input-bar').innerHeight();
@@ -84,6 +86,7 @@ function renderCanvasGallery(img) {
         } else {
             var top = (1 - (wRatio / hRatio)) * gCanvas.height / 2;
         }
+        gTopInput = top;
     } else {
         if (ratio === hRatio) {
             var top = 0;
@@ -96,7 +99,6 @@ function renderCanvasGallery(img) {
     }
     gCtx.drawImage(img, left, top, gWidthImg * ratio, gHeightImg * ratio);
 
-    gTopInput = top;
 }
 
 // Select img to upload
@@ -129,22 +131,6 @@ function clearCanvas() {
 }
 
 function clearText() {
-    $('.line-text-up').val('');
-    $('.line-text-down').val('');
-
-    gColorText[0] = '#ffffff';
-    gColorText[1] = '#ffffff';
-    gStrokeColor[0] = '#000000';
-    gStrokeColor[1] = '#000000';
-    $('.color-text').val('#ffffff');
-    $('.color-stroke').val('#000000');
-    $('.input-text-size-1').val(12);
-    $('.input-text-size-2').val(12);
-    $('.input-font-1').val('impact');
-    $('.input-font-2').val('impact');
-    // saveToStorage('textColor', gColorText);
-    // saveToStorage('strokeColor', gStrokeColor);
-
     updateStrLinesValue(true);
 }
 
@@ -160,39 +146,31 @@ function changeText() {
 
     gCtx.textAlign = 'center';
     gCtx.lineWidth = 3;
-
     var spaceLeft = gCanvas.width / 2;
 
-    var spaceInputUp = 50 + gTopInput;
-    var valUp = $('.line-text-up').val();
-    if (valUp) {
-        gCtx.font = gFont[0];
-        gCtx.fillStyle = gColorText[0];
-        gCtx.strokeStyle = gStrokeColor[0];
-        gCtx.fillText(valUp, spaceLeft, spaceInputUp);
-        gCtx.strokeText(valUp, spaceLeft, spaceInputUp);
-    }
-    var spaceInputDown = gHeightImg - 10 - gTopInput;
-    var valDown = $('.line-text-down').val();
-    if (valDown) {
-        gCtx.font = gFont[1];
-        gCtx.fillStyle = gColorText[1];
-        gCtx.strokeStyle = gStrokeColor[1];
-        gCtx.fillText(valDown, spaceLeft, spaceInputDown);
-        gCtx.strokeText(valDown, spaceLeft, spaceInputDown);
-    }
-
-    for (var i = 2; i < gLineNumber; i++) {
+    for (var i = 0; i < gLineNumber; i++) {
         gCtx.font = gFont[i];
         gCtx.fillStyle = gColorText[i];
         gCtx.strokeStyle = gStrokeColor[i];
         var classToChange = '.line-text-' + (i + 1);
         var valNewLine = $(classToChange).val();
-        if (valNewLine) {
-            gCtx.fillText(valNewLine, spaceLeft, gCanvas.height / 2);
-            gCtx.strokeText(valNewLine, spaceLeft, gCanvas.height / 2);
+        if (i === 0 || i === 1) {
+            if (!i) {
+                var inputLocation = 50 + gTopInput;
+                $(classToChange).attr('placeholder', 'write first line✍');
+            } else {
+                var inputLocation = gCanvas.height - 10 - gTopInput;
+                $(classToChange).attr('placeholder', 'write second line✍');
+            }
+        } else {
+            var inputLocation = gCanvas.height / 2;
+            $(classToChange).attr('placeholder', 'write line ' + (i + 1) + ' ✍');
         }
-        gInputs[i - 2] = valNewLine;
+        if (valNewLine) {
+            gCtx.fillText(valNewLine, spaceLeft, inputLocation);
+            gCtx.strokeText(valNewLine, spaceLeft, inputLocation);
+        }
+        gInputs[i] = valNewLine;
     }
 
 }
@@ -234,20 +212,20 @@ function onRemoveInputText(elBtn, number) {
 function updateStrLinesValue(isClear) {
     for (var i = 0; i < gStrLines.length; i++) {
 
-        var classToUpdate = '.line-text-' + (i + 3);
+        var classToUpdate = '.line-text-' + (i + 1);
         $(classToUpdate).val((isClear) ? '' : gInputs[i]);
 
-        classToUpdate = '.color-text-' + (i + 3);
-        $(classToUpdate).val((isClear) ? '#ffffff' : gColorText[i + 2]);
+        classToUpdate = '.color-text-' + (i + 1);
+        $(classToUpdate).val((isClear) ? '#ffffff' : gColorText[i]);
 
-        classToUpdate = '.color-stroke-' + (i + 3);
-        $(classToUpdate).val((isClear) ? '#000000' : gStrokeColor[i + 2]);
+        classToUpdate = '.color-stroke-' + (i + 1);
+        $(classToUpdate).val((isClear) ? '#000000' : gStrokeColor[i]);
 
-        classToUpdate = '.input-text-size-' + (i + 3);
-        $(classToUpdate).val((isClear) ? 12 : gFontSize[i + 2]);
+        classToUpdate = '.input-text-size-' + (i + 1);
+        $(classToUpdate).val((isClear) ? 12 : gFontSize[i]);
 
-        classToUpdate = '.input-font-' + (i + 3);
-        $(classToUpdate).val((isClear) ? 'impact' : gFontFamily[i + 2]);
+        classToUpdate = '.input-font-' + (i + 1);
+        $(classToUpdate).val((isClear) ? 'impact' : gFontFamily[i]);
     }
 }
 
