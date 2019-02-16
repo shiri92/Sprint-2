@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Gallery</title>
+    <title>Sprint2!</title>
     <link rel="icon" href="img/icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css">
@@ -19,53 +21,60 @@
     <!-- Header and Navigation -->
     <header class="flex">
         <ul class="nav-bar">
-            <li onclick="checkPages('gallery')">Gallery</li>
-            <li onclick="checkPages('edit')">Edit</li>
+            <li onclick="checkPages('gallery')">Gallery🎞</li>
+            <li onclick="checkPages('edit')">Edit🖊</li>
         </ul>
     </header>
 
     <!-- Title Gallery -->
     <div class="title-container">
-        <h1 class="title">Gallery</h1>
+        <h1 class="title">Gallery🎞</h1>
     </div>
 
     <!----------------------- Main Gallery --------------------->
     <main class="main-gallery">
+        <input type="text" id="search" onkeyup="searchImgByWord()" placeholder="&#xF002; Search for picture..">
+
         <input type="file" name="image" onchange="onFileInputChange(event)" />
         <!-- Photos galery -->
         <section class="photo-gallery">
         </section>
 
 
-        <button onclick="onPrevPage()">Prev page</button>
-        <button onclick="onNextPage()">Next page</button>
+        <button onclick="onPrevPage()">🡄 Prev page</button>
+        <button onclick="onNextPage()">Next page 🡆</button>
 
     </main>
 
     <!----------------------- Main Edit ---------------------------->
     <main class="main-edit">
         <!-- Inputs -->
-        <section class="input-bar">
-            <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line">
-            <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line">
+        <div class="edit-conainer">
 
-            <input class="color-text" onchange="changeTextColor(this.value)" type="color" value="#ffffff">
-            <input class="color-back" onchange="changeStrokeColor(this.value)" type="color" value="#000000">
+            <!-- Canvas -->
+            <section>
+                <canvas height="300" width="300" id="edit-canvas"></canvas>
+            </section>
 
-            <a href="#" onclick="downloadCanvas(this)" download="meme">Download</a>
-            <button onclick="clearCanvas();clearText()">Clear Text</button>
-        </section>
+            <section class="input-bar flex space-even wrap flex-col">
 
-        <!-- Canvas -->
-        <section class="canvas">
-            <canvas height="500" width="500" id="edit-canvas"></canvas>
-        </section>
+                <div class="new-lines"></div>
+
+                <button onclick="onRenderNewLine()">Add new line 💫</button>
+
+                <button onclick="clearCanvas();clearText()">Clear all 💥</button>
+
+                <a href="#" onclick="downloadCanvas(this)" download="meme">Download 📥</a>
+            </section>
+
+
+        </div>
     </main>
 
     <!-- Footer -->
     <footer class="">
         <div>
-            <h3>I'm a footer</h3>
+            <h3>I'm a footer la la la lalala</h3>
         </div>
     </footer>
 

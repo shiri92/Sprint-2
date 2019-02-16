@@ -6,19 +6,40 @@ var gCtx;
 const PAGE_SIZE = 6;
 var currPageIdx = 0;
 
+var gCurrImg;
 var gWidthImg = 500;
 var gHeightImg = 500;
 
 var gWidthWindow = 500;
 var gHeightWindow = 500;
 
-var gColorText = 'white';
-var gStrokeColor = 'black';
+var gLineNumber = 0;
 
-var gCurrImg;
-var gFontSize = '50px impact-meme';
+var gTopInput;
+
+var gStrLines = [];
+var gInputs = [];
+var gTextColor = [];
+var gStrokeColor = [];
+var gFontFamily = [];
+var gFontSize = [];
+var gFont = [];
+
+// var gMainLines = {
+//     lines: [],
+//     inputs: [],
+//     'text-color': [],
+//     'stroke-color': [],
+//     'font-family': [],
+//     'font-size': [],
+//     'all-font': [],
+// }
+
+var isFirstEdit = true;
 
 var gImgs;
+var gImgsIsShown;
+
 var gMeme = {
     selectedImgId: 5,
     txts: [{
@@ -31,33 +52,39 @@ var gMeme = {
 
 function getImgs() {
     var fromIdx = currPageIdx * PAGE_SIZE;
-    var imgs = gImgs.slice(fromIdx, fromIdx + PAGE_SIZE);
+    gImgsIsShown = gImgs.reduce(function(acc, img) {
+        if (img.isShown) {
+            acc.push(img);
+        }
+        return acc;
+    }, []);
+    var imgs = gImgsIsShown.slice(fromIdx, fromIdx + PAGE_SIZE);
     return imgs;
 }
 
 function createImgs() {
-    var imgs = [
-        createImg('img/memes/1.jpg'),
-        createImg('img/memes/2.jpg'),
-        createImg('img/memes/3.jpg'),
-        createImg('img/memes/4.jpg'),
-        createImg('img/memes/5.jpg'),
-        createImg('img/memes/6.jpg'),
-        createImg('img/memes/7.jpg'),
-        createImg('img/memes/8.jpg'),
-        createImg('img/memes/9.jpg'),
-        createImg('img/memes/10.jpg'),
-        createImg('img/memes/11.jpg'),
-        createImg('img/memes/12.jpg')
+    gImgs = [
+        createImg('img/memes/1.jpg', ['image', 'sound', 'music', 'flowers', 'mountains', 'dress', 'snow', 'happy', 'girl']),
+        createImg('img/memes/2.jpg', ['image', 'trump', 'presidente', 'finger', 'usa', 'face', 'fake', 'news', 'blond']),
+        createImg('img/memes/3.jpg', ['image', 'happy', 'cute', 'dogs', 'kiss', 'fur', 'tongue', 'love']),
+        createImg('img/memes/4.jpg', ['image', 'dog', 'baby', 'bad', 'sleep', 'white', 'blanket', 'fur', 'head', 'cute']),
+        createImg('img/memes/5.jpg', ['image', 'baby', 'child', 'victory', 'beach', 'sea', 'sand', 'angry', 'boy']),
+        createImg('img/memes/6.jpg', ['image', 'cat', 'cumputer', 'cute', 'sleepy', 'hears', 'blanket', 'tired']),
+        createImg('img/memes/7.jpg', ['image', 'hat', 'clown', 'hair', 'smile', 'purple', 'teeth']),
+        createImg('img/memes/8.jpg', ['image', 'baby', 'filed', 'lake', 'smile', 'grass', 'cunning', 'squares', 'boy']),
+        createImg('img/memes/9.jpg', ['image', 'fingers', 'eyes', 'old', 'man', 'just', 'beard']),
+        createImg('img/memes/10.jpg', ['image', 'shout', 'boy', 'hand', 'eyes', 'fear', 'nervous']),
+        createImg('img/memes/11.jpg', ['image', 'hair', 'HD', 'hands', 'sophisticated', 'dumb', 'japanese', 'eyes']),
+        createImg('img/memes/12.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two'])
     ];
-    gImgs = imgs;
 }
 
-function createImg(url) {
+function createImg(url, keywords) {
     return {
         id: makeId(),
         url: url,
-        keywords: []
+        keywords: keywords,
+        isShown: true
     }
 }
 
@@ -74,6 +101,6 @@ function prevPage() {
 }
 
 function howManyPages() {
-    var number = Math.ceil(gImgs.length / PAGE_SIZE);
+    var number = Math.ceil(gImgsIsShown.length / PAGE_SIZE);
     return number;
 }
