@@ -9,6 +9,9 @@ var currPageIdx = 0;
 var gWidthImg = 500;
 var gHeightImg = 500;
 
+var gWidthWindow = 500;
+var gHeightWindow = 500;
+
 var gColorText = 'white';
 var gStrokeColor = 'black';
 

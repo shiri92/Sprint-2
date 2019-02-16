@@ -61,6 +61,11 @@ header {
     text-align: center;
 }
 
+h1,
+h3 {
+    margin: 0;
+}
+
 
 /********************* Main gallery **********************/
 
@@ -126,7 +131,8 @@ canvas {
 
 footer {
     background-color: rgb(241, 237, 237);
-    height: 130px;
+    /* height: 130px; */
+    width: 100vw;
 }
 
 @media (min-width: 740px) {

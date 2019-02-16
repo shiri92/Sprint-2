@@ -29,16 +29,13 @@
         <h1 class="title">Gallery</h1>
     </div>
 
-
     <!----------------------- Main Gallery --------------------->
     <main class="main-gallery">
         <input type="file" name="image" onchange="onFileInputChange(event)" />
-        <br><br>
         <!-- Photos galery -->
         <section class="photo-gallery">
         </section>
 
-        <br><br>
 
         <button onclick="onPrevPage()">Prev page</button>
         <button onclick="onNextPage()">Next page</button>
@@ -48,7 +45,7 @@
     <!----------------------- Main Edit ---------------------------->
     <main class="main-edit">
         <!-- Inputs -->
-        <section class="">
+        <section class="input-bar">
             <input autofocus class="line-text-up" oninput="changeText()" type="text" placeholder="write first line">
             <input class="line-text-down" oninput="changeText()" type="text" placeholder="write second line">
 
@@ -58,7 +55,6 @@
             <a href="#" onclick="downloadCanvas(this)" download="meme">Download</a>
             <button onclick="clearCanvas();clearText()">Clear Text</button>
         </section>
-        <br>
 
         <!-- Canvas -->
         <section class="canvas">
