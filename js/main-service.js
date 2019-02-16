@@ -18,22 +18,14 @@ var gLineNumber = 0;
 var gTopInput;
 
 var gStrLines = [];
-var gInputs = [];
-var gTextColor = [];
-var gStrokeColor = [];
-var gFontFamily = [];
-var gFontSize = [];
 var gFont = [];
 
-// var gMainLines = {
-//     lines: [],
-//     inputs: [],
-//     'text-color': [],
-//     'stroke-color': [],
-//     'font-family': [],
-//     'font-size': [],
-//     'all-font': [],
-// }
+var gMainLines = [];
+// var gInputs = [];
+// var gTextColor = [];
+// var gStrokeColor = [];
+// var gFontSize = [];
+// var gFontFamily = [];
 
 var isFirstEdit = true;
 
