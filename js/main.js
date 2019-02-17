@@ -9,8 +9,9 @@ function init() {
     $(window).resize(function() {
         changeText();
     });
-
+    renderKeywordsList();
 }
+
 
 function renderImgs() {
     var imgs = getImgs();
@@ -28,11 +29,16 @@ function renderImgs() {
 }
 
 
+
 function searchImgByWord() {
     var inputTxt = $('#search').val();
     for (var i = 0; i < gImgs.length; i++) {
         var imgKeywords = gImgs[i].keywords;
         for (var j = 0; j < imgKeywords.length; j++) {
+            gAllkeywords.push(imgKeywords[j]);
+            gKeywordsFiltered = gAllkeywords.filter(function(keyword, i) {
+                return gAllkeywords.indexOf(keyword) === i;
+            })
             if (imgKeywords[j].indexOf(inputTxt.toLowerCase()) > -1) {
                 gImgs[i].isShown = true;
                 break;
@@ -42,16 +48,42 @@ function searchImgByWord() {
         }
     }
     renderImgs();
+    renderKeywordsList();
+}
+
+function showKeyWordsOnSearch() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('search');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById('keywords-searchbox');
+    li = ul.getElementsByTagName('li');
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName('a')[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+function renderKeywordsList() {
+    var strUl = gKeywordsFiltered.map(function(keyword) {
+        return `<li><a href="#">${keyword}</a></li>`
+    })
+    $('.keywords-searchbox').html(strUl.join(''));
 }
 
 
 
 function checkPages(val) {
     if (val === 'gallery') {
-        $('.main-gallery').css('display', 'block');
+        $('.main-gallery').css('display', 'flex');
         $('.main-edit').css('display', 'none');
         $('.title').html('Gallery🎞');
     }
+
     if (val === 'edit') {
         $('.main-gallery').css('display', 'none');
         $('.main-edit').css('display', 'block');
@@ -63,6 +95,7 @@ function moveToEdit() {
     $('.main-gallery').css('display', 'none');
     $('.main-edit').css('display', 'block');
     $('.title').html('Edit🖊');
+
     if (isFirstEdit) {
         onRenderNewLine();
         onRenderNewLine();
@@ -70,7 +103,6 @@ function moveToEdit() {
         isFirstEdit = false;
     }
 }
-
 
 
 function renderCanvasGallery(img) {
@@ -193,7 +225,6 @@ function drawLines() {
 
         var inputLocation = changeLocatinAndPlaceholder(classToChange, i);
         var valNewLine = $(classToChange).val();
-        console.log(valNewLine)
         if (valNewLine) {
             gCtx.fillText(valNewLine, spaceLeft, inputLocation);
             gCtx.strokeText(valNewLine, spaceLeft, inputLocation);
@@ -305,7 +336,7 @@ function onRenderNewLine() {
     gLineNumber++;
     var strLine = `
     <div>
-        <input class="line-text-${gLineNumber}" oninput="changeText()" type="text" placeholder="write line✍">
+        <input class="text line-text-${gLineNumber}" oninput="changeText()" type="text" placeholder="write line✍">
         <button class="delete-line" onclick="onRemoveInputText(this,${gLineNumber})">🗑️</button>
         <input class="color-text-${gLineNumber}" onchange="changeTextColor(this.value,${gLineNumber})" type="color" value="#ffffff">
         <input class="color-stroke-${gLineNumber}" onchange="changeStrokeColor(this.value,${gLineNumber})" type="color" value="#000000">

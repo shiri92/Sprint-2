@@ -31,6 +31,8 @@ var isFirstEdit = true;
 
 var gImgs;
 var gImgsIsShown;
+var gAllkeywords = [];
+var gKeywordsFiltered = [];
 
 var gMeme = {
     selectedImgId: 5,
@@ -41,6 +43,7 @@ var gMeme = {
         color: 'red'
     }]
 }
+
 
 function getImgs() {
     var fromIdx = currPageIdx * PAGE_SIZE;
@@ -67,7 +70,20 @@ function createImgs() {
         createImg('img/memes/9.jpg', ['image', 'fingers', 'eyes', 'old', 'man', 'just', 'beard']),
         createImg('img/memes/10.jpg', ['image', 'shout', 'boy', 'hand', 'eyes', 'fear', 'nervous']),
         createImg('img/memes/11.jpg', ['image', 'hair', 'HD', 'hands', 'sophisticated', 'dumb', 'japanese', 'eyes']),
-        createImg('img/memes/12.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two'])
+        createImg('img/memes/12.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/13.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/14.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/15.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/16.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/17.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/18.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/19.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/20.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/21.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/22.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/23.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/24.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two'])
+
     ];
 }
 
