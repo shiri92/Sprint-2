@@ -314,8 +314,8 @@ footer {
     .photo-gallery {
         margin: 0 auto;
         grid-template-columns: repeat(15, 1fr);
-        grid-template-rows: repeat(45, 1fr);
-        height: 950px;
+        grid-template-rows: repeat(33, 1fr);
+        height: 750px;
         max-width: 700px;
     }
     .photo-gallery :nth-child(1) {
