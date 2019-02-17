@@ -21,13 +21,15 @@ var gStrLines = [];
 var gFont = [];
 
 var gMainLines = [];
-// var gInputs = [];
-// var gTextColor = [];
-// var gStrokeColor = [];
-// var gFontSize = [];
-// var gFontFamily = [];
 
 var isFirstEdit = true;
+
+// border bounding location
+var BB;
+// drag related variables
+var isDragOn = false;
+var gStartX;
+var gStartY;
 
 var gImgs;
 var gImgsIsShown;
