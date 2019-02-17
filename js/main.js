@@ -268,16 +268,15 @@ function onRemoveInputText(elBtn, number) {
     changeText();
 }
 
-function onTextAlign(elBtn,number, direction) {
+function onTextAlign(elBtn, number, direction) {
     var classToUpdate = '.btn-align-' + (number - 1);
     $(classToUpdate).css('border', '0px solid blue');
-    $("p").css("background-color", "yellow");
-    
+
     if (gMainLines[number - 1]['text-align'] === direction) {
         gMainLines[number - 1]['text-align'] = '';
     } else {
-        gMainLines[number - 1]['text-align'] = direction;
         elBtn.style.border = '2px solid blue';
+        gMainLines[number - 1]['text-align'] = direction;
     }
     changeText();
 }
@@ -384,10 +383,11 @@ function onDown(event) {
     var mouseX = parseInt(event.clientX);
     var mouseY = parseInt(event.clientY);
     isDragOn = false;
+    var distance = (gWidthWindow - gWidthImg) / 2;
     for (var i = 0; i < gMainLines.length; i++) {
         var r = gMainLines[i]['inputs'];
-        if (mouseX > r.left - BORDER_BOX &&
-            mouseX < r.left + r.width + 6 + BORDER_BOX &&
+        if (mouseX > r.left - BORDER_BOX + distance &&
+            mouseX < r.left + r.width + 6 + BORDER_BOX + distance &&
             mouseY > r.top + (FIRST_FONT_SIZE * 4 + 2) - BORDER_BOX &&
             mouseY < r.top + ((gMainLines[i]['font-size'] * 4 + 2) +
                 (FIRST_FONT_SIZE * 4 + 2) + BORDER_BOX)) {
@@ -404,6 +404,7 @@ function onDown(event) {
 
 // handle mouseup events
 function onUp(event) {
+
     // tell the browser we're handling this mouse event
     event.preventDefault();
     event.stopPropagation();
@@ -416,6 +417,7 @@ function onUp(event) {
 }
 
 function onMove(event) {
+
     // if we're dragging anything...
     if (isDragOn) {
 
