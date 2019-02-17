@@ -201,13 +201,37 @@ button {
 
 .aside {
     background-color: gold;
-    /* width: 200px; */
-    margin: 20px;
+    height: 100px;
 }
 
-.showen-keyword {
+.keyword {
     font-family: ubuntu;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.showen-keyword1 {
+    font-size: 50px;
+}
+
+.showen-keyword2 {
+    font-size: 26px;
+    align-self: flex-end;
+}
+
+.showen-keyword3 {
+    font-size: 36px;
+    align-self: center;
+}
+
+.showen-keyword4 {
+    font-size: 22px;
+    align-self: flex-start;
+}
+
+.showen-keyword5 {
+    font-size: 30px;
+    align-self: flex-end;
 }
 
 
@@ -354,6 +378,13 @@ footer {
     /************ aside ************/
     .aside {
         flex-direction: column;
+        width: 200px;
+        height: auto;
+        margin: 20px;
+        align-items: center;
+    }
+    .keyword {
+        padding: 15px;
     }
 }
 
