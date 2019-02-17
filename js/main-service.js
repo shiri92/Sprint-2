@@ -16,6 +16,7 @@ var gHeightWindow = 500;
 var gLineNumber = 0;
 
 var gTopInput;
+var FIRST_FONT_SIZE = 12;
 
 var gStrLines = [];
 var gFont = [];
@@ -24,12 +25,11 @@ var gMainLines = [];
 
 var isFirstEdit = true;
 
-// border bounding location
-var BB;
 // drag related variables
 var isDragOn = false;
 var gStartX;
 var gStartY;
+var BORDER_BOX = 2;
 
 var gImgs;
 var gImgsIsShown;

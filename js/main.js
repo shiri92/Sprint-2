@@ -6,27 +6,25 @@ function init() {
     gCtx.font = gFont;
     createImgs();
     renderImgs();
-    $(window).resize(function() {
+    $(window).resize(function () {
         changeText();
     });
     // listen for mouse events
     gCanvas.onmousedown = onDown;
     gCanvas.onmouseup = onUp;
     gCanvas.onmousemove = onMove;
-
-    BB = gCanvas.getBoundingClientRect();
 }
 
 function renderImgs() {
     var imgs = getImgs();
-    var newImgs = imgs.reduce(function(acc, img) {
+    var newImgs = imgs.reduce(function (acc, img) {
         if (img.isShown === true) {
             acc.push(img);
         }
         return acc;
     }, [])
 
-    var strHtml = newImgs.map(function(img) {
+    var strHtml = newImgs.map(function (img) {
         return `<img onclick="chooseImgFromGallery(this)" src="${img.url}" alt="img">`
     })
     $('.photo-gallery').html(strHtml.join(''));
@@ -96,7 +94,7 @@ function renderCanvasGallery(img) {
         var footerH = $('footer').innerHeight();
         var sum = headerH + titleH + inputsH + footerH;
 
-        gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow;
+        gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow - 2;
         gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4;
 
         var wRatio = gCanvas.width / gWidthImg;
@@ -134,7 +132,7 @@ function onFileInputChange(ev) {
 //UPLOAD IMG WITH INPUT FILE
 function handleImageFromUpload(ev, onImageReady) {
     var reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         var img = new Image();
         img.onload = onImageReady.bind(null, img);
         img.src = event.target.result;
@@ -172,23 +170,18 @@ function printRects() {
     for (var i = 0; i < gMainLines.length; i++) {
         var rectWidth = gMainLines[i]['inputs']['width'];
         if (!(rectWidth === 0 || rectWidth === 201.2578125)) {
-            gCtx.rectWidth = '2';
+            gCtx.rectWidth = BORDER_BOX;
             rectWidth += 6;
             var rectHeight = gMainLines[i]['font-size'] * 4 + 2;
             var rectTop = gMainLines[i]['inputs']['top'] - rectHeight + 8;
             if (gMainLines[i]['inputs']['isMoveOnce'] === false) {
                 gMainLines[i]['inputs']['left'] = (gCanvas.width / 2) - (rectWidth / 2);
-                var rectLeft = gMainLines[i]['inputs']['left'];
             }
+            var rectLeft = gMainLines[i]['inputs']['left'];
             gCtx.beginPath();
-            gCtx.fillStyle = "adadad00";
             gCtx.strokeStyle = 'rgb(36, 36, 36)';
             gCtx.rect(rectLeft, rectTop, rectWidth, rectHeight);
             gCtx.stroke();
-            // gMainLines[i]['rect']['left'] = rectLeft;
-            // gMainLines[i]['rect']['top'] = rectTop;
-            // gMainLines[i]['rect']['width'] = rectWidth;
-            // gMainLines[i]['rect']['height'] = rectHeight;
         }
     }
 }
@@ -196,27 +189,36 @@ function printRects() {
 function drawLines() {
     gCtx.textAlign = 'center';
     gCtx.lineWidth = 3;
-    var spaceLeft = gCanvas.width / 2;
     for (var i = 0; i < gLineNumber; i++) {
+
+        if (gMainLines[i]['inputs']['isMoveOnce'] === false) {
+            var spaceLeft = (gCanvas.width / 2);
+        } else {
+            var rectWidth = gMainLines[i]['inputs']['width'];
+            var spaceLeft = gMainLines[i]['inputs']['left'] + (rectWidth / 2) + 3;
+        }
+
         gCtx.font = gFont[i];
         gCtx.fillStyle = gMainLines[i]['text-color'];
         gCtx.strokeStyle = gMainLines[i]['stroke-color'];
 
         var classToChange = '.line-text-' + (i + 1);
 
-        var inputLocation = changeLocatinAndPlaceholder(classToChange, i);
+        if (gMainLines[i]['inputs']['isMoveOnce'] === false) {
+            var spaceTop = changeLocatinAndPlaceholder(classToChange, i);
+            gMainLines[i]['inputs']['top'] = spaceTop;
+        } else {
+            var spaceTop = gMainLines[i]['inputs']['top'];
+        }
         var valNewLine = $(classToChange).val();
 
         if (valNewLine) {
-            gCtx.fillText(valNewLine, spaceLeft, inputLocation);
-            gCtx.strokeText(valNewLine, spaceLeft, inputLocation);
+            gCtx.fillText(valNewLine, spaceLeft, spaceTop);
+            gCtx.strokeText(valNewLine, spaceLeft, spaceTop);
         }
 
         gMainLines[i]['inputs']['val'] = valNewLine;
         gMainLines[i]['inputs']['width'] = gCtx.measureText(valNewLine).width;
-        if (gMainLines[i]['inputs']['isMoveOnce'] === false) {
-            gMainLines[i]['inputs']['top'] = inputLocation;
-        }
     }
 }
 
@@ -266,6 +268,20 @@ function onRemoveInputText(elBtn, number) {
     changeText();
 }
 
+function onTextAlign(elBtn,number, direction) {
+    var classToUpdate = '.btn-align-' + (number - 1);
+    $(classToUpdate).css('border', '0px solid blue');
+    $("p").css("background-color", "yellow");
+    
+    if (gMainLines[number - 1]['text-align'] === direction) {
+        gMainLines[number - 1]['text-align'] = '';
+    } else {
+        gMainLines[number - 1]['text-align'] = direction;
+        elBtn.style.border = '2px solid blue';
+    }
+    changeText();
+}
+
 function updateStrLinesValue(isClear) {
     for (var i = 0; i < gStrLines.length; i++) {
         if (isClear) {
@@ -274,8 +290,9 @@ function updateStrLinesValue(isClear) {
             gMainLines[i]['inputs']['top'] = 0;
             gMainLines[i]['text-color'] = '#ffffff';
             gMainLines[i]['stroke-color'] = '#000000';
-            gMainLines[i]['font-size'] = '12';
+            gMainLines[i]['font-size'] = FIRST_FONT_SIZE;
             gMainLines[i]['font-family'] = 'impact';
+            gMainLines[i]['text-align'] = '';
         }
         var classToUpdate = '.line-text-' + (i + 1);
         $(classToUpdate).val(gMainLines[i]['inputs']['val']);
@@ -291,14 +308,17 @@ function updateStrLinesValue(isClear) {
 
         classToUpdate = '.input-font-' + (i + 1);
         $(classToUpdate).val(gMainLines[i]['font-family']);
+
+        classToUpdate = '.input-font-' + (i + 1);
+        $(classToUpdate).val(gMainLines[i]['text-align']);
     }
 }
 
 function onRenderNewLine() {
     gLineNumber++;
     var strLine = `
-    <div>
-        <input class="line-text-${gLineNumber}" oninput="changeText()" type="text" placeholder="write line✍">
+    <div class="flex wrap space-between">
+        <input class="line-text line-text-${gLineNumber}" oninput="changeText()" type="text" placeholder="write line✍">
         <button class="delete-line" onclick="onRemoveInputText(this,${gLineNumber})">🗑️</button>
         <input class="color-text-${gLineNumber}" onchange="changeTextColor(this.value,${gLineNumber})" type="color" value="#ffffff">
         <input class="color-stroke-${gLineNumber}" onchange="changeStrokeColor(this.value,${gLineNumber})" type="color" value="#000000">
@@ -313,14 +333,17 @@ function onRenderNewLine() {
                 <option value="16">16</option>
                 <option value="18">18</option>
                 </select>
-            <input class="input-text-size-${gLineNumber}" onchange="onChangeFontSize(${gLineNumber})" type="text" name="format" value="12" />
+            <input class="input-text-size-${gLineNumber}" onchange="onChangeFontSize(${gLineNumber})" type="text" name="format" value="${FIRST_FONT_SIZE}" />
         </div>
-        <select class="input-font-${gLineNumber}" onchange="onSetFontFamily(this.value,${gLineNumber})">
+        <select class="input-font input-font-${gLineNumber}" onchange="onSetFontFamily(this.value,${gLineNumber})">
             <option value="impact">Impact</option>
             <option value="ubuntu">Ubuntu</option>
             <option value="Play">play</option>
             <option value="Inconsolata">inconsolata</option>
         </select>
+        <button class="btn-align-${gLineNumber}" onclick="onTextAlign(this,${gLineNumber},'right')">⇚</button>
+        <button class="btn-align-${gLineNumber}" onclick="onTextAlign(this,${gLineNumber},'center')">⤄</button>
+        <button class="btn-align-${gLineNumber}" onclick="onTextAlign(this,${gLineNumber},'left')">⇛</button>
     </div>`;
 
     gStrLines.push(strLine);
@@ -338,15 +361,10 @@ function onRenderNewLine() {
         },
         'text-color': '#ffffff',
         'stroke-color': '#000000',
-        'font-size': '12',
+        'font-size': FIRST_FONT_SIZE,
         'font-family': 'impact',
-        // rect: {
-        //     left: 0,
-        //     top: 0,
-        //     width: 0,
-        //     height: 0,
-        //     isDrag: false
-        // }
+        'text-align': ''
+
     });
 
     gFont.push((gMainLines[gLineNumber - 1]['font-size'] * 4) + 'px ' + gMainLines[gLineNumber - 1]['font-family']);
@@ -356,27 +374,27 @@ function onRenderNewLine() {
     changeText();
 }
 
-
-
 // handle mousedown events
 function onDown(event) {
-    var offsetX = BB.left;
-    var offsetY = BB.top;
     // tell the browser we're handling this mouse event
     event.preventDefault();
     event.stopPropagation();
 
     // get the current mouse position
-    var mouseX = parseInt(event.clientX - offsetX);
-    var mouseY = parseInt(event.clientY - offsetY);
+    var mouseX = parseInt(event.clientX);
+    var mouseY = parseInt(event.clientY);
     isDragOn = false;
     for (var i = 0; i < gMainLines.length; i++) {
         var r = gMainLines[i]['inputs'];
-        if (mouseX > r.left && mouseX < r.left + r.width &&
-            mouseY > r.top && mouseY < r.top + (gMainLines[i]['font-size'] * 4 + 2)) {
-            // if yes, set that rects isDragging=true
+        if (mouseX > r.left - BORDER_BOX &&
+            mouseX < r.left + r.width + 6 + BORDER_BOX &&
+            mouseY > r.top + (FIRST_FONT_SIZE * 4 + 2) - BORDER_BOX &&
+            mouseY < r.top + ((gMainLines[i]['font-size'] * 4 + 2) +
+                (FIRST_FONT_SIZE * 4 + 2) + BORDER_BOX)) {
+            // if yes, set that rects isDrag = true
             isDragOn = true;
             r.isDrag = true;
+            break;
         }
     }
     // save the current mouse position
@@ -398,8 +416,6 @@ function onUp(event) {
 }
 
 function onMove(event) {
-    var offsetX = BB.left;
-    var offsetY = BB.top;
     // if we're dragging anything...
     if (isDragOn) {
 
@@ -408,14 +424,14 @@ function onMove(event) {
         event.stopPropagation();
 
         // get the current mouse position
-        var mouseX = parseInt(event.clientX - offsetX);
-        var mouseY = parseInt(event.clientY - offsetY);
+        var mouseX = parseInt(event.clientX);
+        var mouseY = parseInt(event.clientY);
 
         // calculate the distance the mouse has moved since the last mousemove
         var distanceX = mouseX - gStartX;
         var distanceY = mouseY - gStartY;
 
-        // move each rect that isDragging 
+        // move each rect that isDrag 
         // by the distance the mouse has moved
         // since the last mousemove
         for (var i = 0; i < gMainLines.length; i++) {
