@@ -176,7 +176,7 @@ button {
 }
 
 .input-bar {
-    max-width: 500px;
+    max-width: 380px;
     margin: 0 auto;
 }
 
@@ -192,8 +192,12 @@ canvas {
     height: 14px;
 }
 
-.font-input {
-    width: 80px;
+.line-text {
+    width: 100%;
+}
+
+.input-font {
+    width: 70px;
 }
 
 .select-editable {
@@ -201,7 +205,7 @@ canvas {
     background-color: white;
     border: solid grey 1px;
     width: 50px;
-    top: 8px;
+    top: 0px;
     height: 24px;
     display: inline-block;
 }
@@ -236,10 +240,6 @@ canvas {
     border-radius: 10px;
     width: 30%;
     align-self: center;
-}
-
-.text {
-    width: 50px;
 }
 
 
@@ -282,10 +282,6 @@ footer {
     /************ aside ************/
     aside {
         margin-right: 20px;
-    }
-    /********* edit inputs *********/
-    .text {
-        width: auto;
     }
 }
 
@@ -332,6 +328,10 @@ footer {
 
 .space-around {
     justify-content: space-around;
+}
+
+.flex-reverse {
+    flex-direction: row-reverse;
 }
 
 

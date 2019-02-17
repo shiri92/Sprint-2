@@ -16,18 +16,20 @@ var gHeightWindow = 500;
 var gLineNumber = 0;
 
 var gTopInput;
+var FIRST_FONT_SIZE = 12;
 
 var gStrLines = [];
 var gFont = [];
 
 var gMainLines = [];
-// var gInputs = [];
-// var gTextColor = [];
-// var gStrokeColor = [];
-// var gFontSize = [];
-// var gFontFamily = [];
 
 var isFirstEdit = true;
+
+// drag related variables
+var isDragOn = false;
+var gStartX;
+var gStartY;
+var BORDER_BOX = 2;
 
 var gImgs;
 var gImgsIsShown;
