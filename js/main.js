@@ -9,7 +9,6 @@ function init() {
     $(window).resize(function() {
         changeText();
     });
-    renderKeywordsList();
     // listen for mouse events
     gCanvas.onmousedown = onDown;
     gCanvas.onmouseup = onUp;
@@ -33,6 +32,13 @@ function renderImgs() {
 }
 
 
+function renderKeywordsList() {
+    var strUl = gKeywordsFiltered.map(function(keyword) {
+        return `<li><a href="#">${keyword}</a></li>`
+    })
+    $('.keywords-searchbox').html(strUl.join(''));
+}
+
 
 function searchImgByWord() {
     var inputTxt = $('#search').val();
@@ -51,8 +57,13 @@ function searchImgByWord() {
             }
         }
     }
+    var strUl = gKeywordsFiltered.map(function(keyword) {
+        return `<li><a href="#">${keyword}</a></li>`
+    })
+    $('.keywords-searchbox').html(strUl.join(''));
+
+
     renderImgs();
-    renderKeywordsList();
 }
 
 function showKeyWordsOnSearch() {
@@ -72,12 +83,7 @@ function showKeyWordsOnSearch() {
     }
 }
 
-function renderKeywordsList() {
-    var strUl = gKeywordsFiltered.map(function(keyword) {
-        return `<li><a href="#">${keyword}</a></li>`
-    })
-    $('.keywords-searchbox').html(strUl.join(''));
-}
+
 
 function checkPages(val) {
     if (val === 'gallery') {
