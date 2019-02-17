@@ -16,6 +16,10 @@ function init() {
     // renderKeysToShow();
 }
 
+// function renderKeysToShow() {
+
+// }
+
 
 
 function renderImgs() {
@@ -122,7 +126,7 @@ function renderCanvasGallery(img) {
         var sum = headerH + titleH + inputsH + footerH;
 
         gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow - 2;
-        gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4;
+        gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4 - 10;
 
         var wRatio = gCanvas.width / gWidthImg;
         var hRatio = gCanvas.height / gHeightImg;
