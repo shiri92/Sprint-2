@@ -6,7 +6,7 @@ function init() {
     gCtx.font = gFont;
     createImgs();
     renderImgs();
-    $(window).resize(function() {
+    $(window).resize(function () {
         changeText();
     });
     // listen for mouse events
@@ -24,14 +24,14 @@ function init() {
 
 function renderImgs() {
     var imgs = getImgs();
-    var newImgs = imgs.reduce(function(acc, img) {
+    var newImgs = imgs.reduce(function (acc, img) {
         if (img.isShown === true) {
             acc.push(img);
         }
         return acc;
     }, [])
 
-    var strHtml = newImgs.map(function(img) {
+    var strHtml = newImgs.map(function (img) {
         return `<img onclick="chooseImgFromGallery(this)" src="${img.url}" alt="img">`
     })
     $('.photo-gallery').html(strHtml.join(''));
@@ -64,7 +64,7 @@ function renderKeywordsList(word) {
             keysToShow.push(gKeywordsFiltered[i]);
         }
     }
-    var strUl = keysToShow.map(function(keyword) {
+    var strUl = keysToShow.map(function (keyword) {
         return `<option value="${keyword}">`
     })
     $('.keywords-searchbox').html(strUl.join(''));
@@ -124,6 +124,8 @@ function renderCanvasGallery(img) {
         var inputsH = $('.input-bar').innerHeight();
         var footerH = $('footer').innerHeight();
         var sum = headerH + titleH + inputsH + footerH;
+        console.log('sum ' + sum)
+        console.log('gHeightWindow ' + gHeightWindow)
 
         gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow - 2;
         gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4 - 10;
@@ -164,7 +166,7 @@ function onFileInputChange(ev) {
 //UPLOAD IMG WITH INPUT FILE
 function handleImageFromUpload(ev, onImageReady) {
     var reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         var img = new Image();
         img.onload = onImageReady.bind(null, img);
         img.src = event.target.result;
@@ -437,6 +439,9 @@ function onDown(event) {
         var r = gMainLines[i]['inputs'];
         if (mouseX > r.left - BORDER_BOX + distance &&
             mouseX < r.left + r.width + 6 + BORDER_BOX + distance &&
+            // mouseY > r.top + (FIRST_FONT_SIZE * 4 + 2) - BORDER_BOX &&
+            // mouseY < r.top + ((gMainLines[i]['font-size'] * 4 + 2) +
+            //     (FIRST_FONT_SIZE * 4 + 2) + BORDER_BOX)) {
             mouseY > r.top + (FIRST_FONT_SIZE * 4 + 2) - BORDER_BOX &&
             mouseY < r.top + ((gMainLines[i]['font-size'] * 4 + 2) +
                 (FIRST_FONT_SIZE * 4 + 2) + BORDER_BOX)) {
