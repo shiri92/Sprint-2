@@ -120,8 +120,6 @@ function renderCanvasGallery(img) {
         var inputsH = $('.input-bar').innerHeight();
         var footerH = $('footer').innerHeight();
         var sum = headerH + titleH + inputsH + footerH;
-        console.log('sum ' + sum)
-        console.log('gHeightWindow ' + gHeightWindow)
 
         gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow - 2;
         gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4;
@@ -215,7 +213,7 @@ function printRects() {
             var rectLeft = gMainLines[i]['inputs']['left'];
             gCtx.beginPath();
             gCtx.strokeStyle = 'rgb(36, 36, 36)';
-            gCtx.rect(rectLeft, rectTop, rectWidth, rectHeight);
+            gCtx.rect(rectLeft, rectTop, 0, 0);
             gCtx.stroke();
         }
     }
@@ -225,11 +223,23 @@ function drawLines() {
     gCtx.textAlign = 'center';
     gCtx.lineWidth = 3;
     for (var i = 0; i < gLineNumber; i++) {
-
+        var align = gMainLines[i]['text-align'];
+        var rectWidth = gMainLines[i]['inputs']['width'];
         if (gMainLines[i]['inputs']['isMoveOnce'] === false) {
-            var spaceLeft = (gCanvas.width / 2);
+            if (align) {
+                if (align === 'right') {
+                    var spaceLeft = 0 + rectWidth;
+                }
+                if (align === 'center') {
+                    var spaceLeft = (gCanvas.width / 2);;
+                }
+                if (align === 'left') {
+                    var spaceLeft = (gCanvas.width - rectWidth);;
+                }
+            } else {
+                var spaceLeft = (gCanvas.width / 2);
+            }
         } else {
-            var rectWidth = gMainLines[i]['inputs']['width'];
             var spaceLeft = gMainLines[i]['inputs']['left'] + (rectWidth / 2) + 3;
         }
 
@@ -308,14 +318,13 @@ function onRemoveInputText(elBtn, number) {
 }
 
 function onTextAlign(elBtn, number, direction) {
-    var classToUpdate = '.btn-align-' + (number - 1);
-    $(classToUpdate).css('border', '0px solid blue');
 
     if (gMainLines[number - 1]['text-align'] === direction) {
         gMainLines[number - 1]['text-align'] = '';
+        // elBtn.style.border = '0px solid blue';
     } else {
-        elBtn.style.border = '2px solid blue';
         gMainLines[number - 1]['text-align'] = direction;
+        // elBtn.style.border = '2px solid blue';
     }
     changeText();
 }
@@ -435,12 +444,8 @@ function onDown(event) {
         var r = gMainLines[i]['inputs'];
         if (mouseX > r.left - BORDER_BOX + distance &&
             mouseX < r.left + r.width + 6 + BORDER_BOX + distance &&
-            // mouseY > r.top + (FIRST_FONT_SIZE * 4 + 2) - BORDER_BOX &&
-            // mouseY < r.top + ((gMainLines[i]['font-size'] * 4 + 2) +
-            //     (FIRST_FONT_SIZE * 4 + 2) + BORDER_BOX)) {
-            mouseY > r.top + (FIRST_FONT_SIZE * 4 + 2) - BORDER_BOX &&
-            mouseY < r.top + ((gMainLines[i]['font-size'] * 4 + 2) +
-                (FIRST_FONT_SIZE * 4 + 2) + BORDER_BOX)) {
+            mouseY > r.top - BORDER_BOX - 6 &&
+            mouseY < r.top + ((gMainLines[i]['font-size'] * 4 + 2) - 6 + BORDER_BOX)) {
             // if yes, set that rects isDrag = true
             isDragOn = true;
             r.isDrag = true;
