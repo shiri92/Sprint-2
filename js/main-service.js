@@ -9,6 +9,7 @@ var currPageIdx = 0;
 var gCurrImg;
 var gWidthImg = 500;
 var gHeightImg = 500;
+var gDistanceHeightBlack = 0;
 
 var gWidthWindow = 500;
 var gHeightWindow = 500;

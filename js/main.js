@@ -66,8 +66,6 @@ function renderKeywordsList(word) {
     $('.keywords-searchbox').html(strUl.join(''));
 }
 
-
-
 function checkPages(val) {
     if (val === 'gallery') {
         $('.main-gallery').css('display', 'flex');
@@ -149,6 +147,7 @@ function renderCanvasGallery(img) {
         gCtx.drawImage(img, left, top, gWidthImg * ratio, gHeightImg * ratio);
 
         gTopInput = top;
+        gDistanceHeightBlack = gHeightImg * ratio;
     }
 }
 
@@ -198,10 +197,15 @@ function changeText() {
 function printRects() {
     for (var i = 0; i < gMainLines.length; i++) {
         var rectWidth = gMainLines[i]['inputs']['width'];
-        if (!(rectWidth === 0 || rectWidth === 201.2578125)) {
+        if (!(rectWidth === 0)) {
+            if (rectWidth === 201.2578125 || rectWidth === 202) {
+                rectWidth = 0;
+                var rectHeight = 0;
+            } else {
+                rectWidth += 6;
+                var rectHeight = gMainLines[i]['font-size'] * 4 + 2;
+            }
             gCtx.rectWidth = BORDER_BOX;
-            rectWidth += 6;
-            var rectHeight = gMainLines[i]['font-size'] * 4 + 2;
             var rectTop = gMainLines[i]['inputs']['top'] - rectHeight + 8;
             if (gMainLines[i]['inputs']['isMoveOnce'] === false) {
                 gMainLines[i]['inputs']['left'] = (gCanvas.width / 2) - (rectWidth / 2);
@@ -293,7 +297,11 @@ function onRemoveInputText(elBtn, number) {
     var textDiv = elBtn.parentElement;
     textDiv.innerHTML = '';
     gStrLines[number - 1] = '';
-    gMainLines[number - 1]['inputs']['width'] = '';
+    gMainLines[number - 1]['inputs']['val'] = '';
+    gMainLines[number - 1]['inputs']['width'] = 0;
+    gMainLines[number - 1]['inputs']['top'] = 0;
+    gMainLines[number - 1]['inputs']['left'] = 0;
+    gMainLines[number - 1]['inputs']['isDrag'] = false;
     changeText();
 }
 
@@ -316,6 +324,8 @@ function updateStrLinesValue(isClear) {
             gMainLines[i]['inputs']['val'] = '';
             gMainLines[i]['inputs']['width'] = 0;
             gMainLines[i]['inputs']['top'] = 0;
+            gMainLines[i]['inputs']['left'] = 0;
+            gMainLines[i]['inputs']['isDrag'] = false;
             gMainLines[i]['text-color'] = '#ffffff';
             gMainLines[i]['stroke-color'] = '#000000';
             gMainLines[i]['font-size'] = FIRST_FONT_SIZE;
@@ -412,7 +422,13 @@ function onDown(event) {
     var mouseX = parseInt(event.clientX);
     var mouseY = parseInt(event.clientY);
     isDragOn = false;
-    var distance = (gWidthWindow - gWidthImg) / 2;
+
+    var distanceW = (gWidthWindow - gWidthImg) / 2;
+    if (distanceW >= 0) {
+        var distance = distanceW;
+    } else {
+        var distance = 0;
+    }
     for (var i = 0; i < gMainLines.length; i++) {
         var r = gMainLines[i]['inputs'];
         if (mouseX > r.left - BORDER_BOX + distance &&

@@ -35,7 +35,8 @@ html {
 body {
     margin: 0;
     font-size: 16px;
-    /* background-color: rgb(246, 251, 255); */
+    background-image: linear-gradient(rgba(0, 217, 255, 0.123), rgba(255, 166, 0, 0.2));
+    /* background-image: linear-gradient(to right, rgba(0, 217, 255, 0.123), rgba(255, 166, 0, 0.2)); */
 }
 
 
@@ -55,8 +56,15 @@ header {
 .nav-bar li {
     color: rgb(230, 239, 245);
     display: inline-block;
-    padding: 14px 16px;
+    padding: 8px 16px;
     cursor: pointer;
+}
+
+.divider {
+    display: inline-block;
+    width: 0;
+    height: 1em;
+    border-left: 1px solid white;
 }
 
 .nav-bar li:hover {
@@ -253,7 +261,7 @@ canvas {
 /*********************** Footer ************************/
 
 footer {
-    background-color: rgb(241, 237, 237);
+    background-color: rgba(190, 190, 190, 0.596);
     /* height: 130px; */
     width: 100%;
     text-align: center;
