@@ -19,35 +19,33 @@
     <!-- Header and Navigation -->
     <header class="flex">
         <ul class="nav-bar">
-            <li onclick="checkPages('gallery')">Gallery🎞</li>
-            <li onclick="checkPages('edit')">Edit🖊</li>
+            <li class="li-gallery" onclick="checkPages('gallery')">Gallery🎞</li>
+            <li class="li-edit" onclick="checkPages('edit')">Edit🖊</li>
         </ul>
     </header>
-
-    <!-- Title Gallery -->
-    <div class="title-container">
-        <h1 class="title">Gallery🎞</h1>
-    </div>
 
     <!----------------------- Main Gallery --------------------->
     <main class="main-gallery flex space-even">
 
-        <div class="aside keywords-container">
-            <div>boy</div>
-            <div>happy</div>
-            <div>eyes</div>
-            <div>four</div>
-            <div>clown</div>
-        </div>
+        <!-- <div class="aside keywords-container flex flex-col space-around">
+            <div class="showen-keyword">boy</div>
+            <div class="showen-keyword">happy</div>
+            <div class="showen-keyword">eyes</div>
+            <div class="showen-keyword">four</div>
+            <div class="showen-keyword">clown</div>
+        </div> -->
 
         <div class="gallery-content">
             <div class="gallery-inputs flex space-between wrap">
-                <input type="text" id="search" onkeyup="searchImgByWord()" placeholder="🔍Search for picture..">
-                <ul class="keywords-searchbox">
-                </ul>
+                <div class="search-container flex flex-col">
+                    <input type="text" id="search" onkeyup="searchImgByWord()" placeholder="🔍Search for picture.." list="keywords" name="keyword">
+                    <datalist class="keywords-searchbox" id="keywords">
+                    </datalist>
+                </div>
 
                 <input class="upload" type="file" name="image" onchange="onFileInputChange(event)" />
             </div>
+
             <!-- Photos galery -->
             <section class="photo-gallery">
             </section>

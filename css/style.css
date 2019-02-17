@@ -46,7 +46,7 @@ body {
 
 header {
     background-color: rgb(57, 97, 122);
-    order: 1;
+    /* order: 1; */
 }
 
 
@@ -146,18 +146,19 @@ button {
     margin: 0;
 }
 
-.keywords-searchbox li a {
+.keywords-searchbox option a {
     border: 1px solid #ddd;
     margin-top: -1px;
     background-color: #f6f6f6;
-    padding: 12px;
+    padding: 0;
     text-decoration: none;
     font-size: 18px;
     color: black;
-    display: block
+    display: block;
+    height: 25px;
 }
 
-.keywords-searchbox li a:hover:not(.header) {
+.keywords-searchbox option:hover:not(.header) {
     background-color: #eee;
 }
 
@@ -166,6 +167,12 @@ button {
 
 .aside {
     background-color: gold;
+    width: 200px;
+}
+
+.showen-keyword {
+    font-family: ubuntu;
+    font-weight: bold;
 }
 
 
@@ -259,7 +266,7 @@ footer {
 @media (min-width: 740px) {
     header {
         background-color: rgb(57, 97, 122);
-        order: -1;
+        /* order: -1; */
     }
     /* Nav */
     .nav-bar li {

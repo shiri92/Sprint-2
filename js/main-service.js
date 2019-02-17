@@ -33,7 +33,6 @@ var BORDER_BOX = 2;
 
 var gImgs;
 var gImgsIsShown;
-var gAllkeywords = [];
 var gKeywordsFiltered = [];
 
 var gMeme = {
@@ -46,7 +45,6 @@ var gMeme = {
     }]
 }
 
-
 function getImgs() {
     var fromIdx = currPageIdx * PAGE_SIZE;
     gImgsIsShown = gImgs.reduce(function(acc, img) {
@@ -57,6 +55,27 @@ function getImgs() {
     }, []);
     var imgs = gImgsIsShown.slice(fromIdx, fromIdx + PAGE_SIZE);
     return imgs;
+}
+
+function getUniqueKeywords() {
+    var arr = [];
+    for (var i = 0; i < gImgs.length; i++) {
+        var imgKeywords = gImgs[i].keywords;
+        for (var j = 0; j < imgKeywords.length; j++) {
+            arr.push(imgKeywords[j])
+        }
+    }
+
+    for (var k = 0; k < arr.length; k++) {
+        var word = arr[k];
+        for (var l = (k + 1); l < arr.length; l++) {
+            if (word === arr[l]) {
+                arr.splice(l, 1);
+                l--;
+            }
+        }
+    }
+    gKeywordsFiltered = arr;
 }
 
 function createImgs() {

@@ -13,7 +13,9 @@ function init() {
     gCanvas.onmousedown = onDown;
     gCanvas.onmouseup = onUp;
     gCanvas.onmousemove = onMove;
+    // renderKeysToShow();
 }
+
 
 
 function renderImgs() {
@@ -32,23 +34,13 @@ function renderImgs() {
 }
 
 
-function renderKeywordsList() {
-    var strUl = gKeywordsFiltered.map(function(keyword) {
-        return `<li><a href="#">${keyword}</a></li>`
-    })
-    $('.keywords-searchbox').html(strUl.join(''));
-}
-
-
 function searchImgByWord() {
+    getUniqueKeywords();
     var inputTxt = $('#search').val();
+    renderKeywordsList(inputTxt);
     for (var i = 0; i < gImgs.length; i++) {
         var imgKeywords = gImgs[i].keywords;
         for (var j = 0; j < imgKeywords.length; j++) {
-            gAllkeywords.push(imgKeywords[j]);
-            gKeywordsFiltered = gAllkeywords.filter(function(keyword, i) {
-                return gAllkeywords.indexOf(keyword) === i;
-            })
             if (imgKeywords[j].indexOf(inputTxt.toLowerCase()) > -1) {
                 gImgs[i].isShown = true;
                 break;
@@ -57,30 +49,21 @@ function searchImgByWord() {
             }
         }
     }
-    var strUl = gKeywordsFiltered.map(function(keyword) {
-        return `<li><a href="#">${keyword}</a></li>`
-    })
-    $('.keywords-searchbox').html(strUl.join(''));
-
-
     renderImgs();
 }
 
-function showKeyWordsOnSearch() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById('search');
-    filter = input.value.toUpperCase();
-    ul = document.getElementById('keywords-searchbox');
-    li = ul.getElementsByTagName('li');
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName('a')[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
+
+function renderKeywordsList(word) {
+    var keysToShow = [];
+    for (var i = 0; i < gKeywordsFiltered.length; i++) {
+        if (gKeywordsFiltered[i].search(word) !== -1) {
+            keysToShow.push(gKeywordsFiltered[i]);
         }
     }
+    var strUl = keysToShow.map(function(keyword) {
+        return `<option value="${keyword}">`
+    })
+    $('.keywords-searchbox').html(strUl.join(''));
 }
 
 
@@ -89,13 +72,15 @@ function checkPages(val) {
     if (val === 'gallery') {
         $('.main-gallery').css('display', 'flex');
         $('.main-edit').css('display', 'none');
-        $('.title').html('Gallery🎞');
+        $('.li-gallery').css('backgroundColor', 'rgb(32, 45, 54)');
+        $('.li-edit').css('backgroundColor', 'rgb(57, 97, 122)');
     }
 
     if (val === 'edit') {
         $('.main-gallery').css('display', 'none');
         $('.main-edit').css('display', 'block');
-        $('.title').html('Edit🖊');
+        $('.li-edit').css('backgroundColor', 'rgb(32, 45, 54)');
+        $('.li-gallery').css('backgroundColor', 'rgb(57, 97, 122)');
     }
 }
 
@@ -112,7 +97,8 @@ function onPrevPage() {
 function moveToEdit() {
     $('.main-gallery').css('display', 'none');
     $('.main-edit').css('display', 'block');
-    $('.title').html('Edit🖊');
+    $('.li-edit').css('backgroundColor', 'rgb(32, 45, 54)');
+    $('.li-gallery').css('backgroundColor', 'rgb(57, 97, 122)');
 
     if (isFirstEdit) {
         onRenderNewLine();
@@ -129,9 +115,10 @@ function renderCanvasGallery(img) {
         gWidthImg = img.naturalWidth;
         gHeightImg = img.naturalHeight;
         gWidthWindow = $(window).innerWidth();
-        gHeightWindow = $(window).innerHeight(); /////// לבדוק וינדואו פחות הקנבס 
+        gHeightWindow = $(window).innerHeight();
         var headerH = $('header').innerHeight();
-        var titleH = $('.title-container').innerHeight();
+        // var titleH = $('.title-container').innerHeight();
+        var titleH = 0;
         var inputsH = $('.input-bar').innerHeight();
         var footerH = $('footer').innerHeight();
         var sum = headerH + titleH + inputsH + footerH;
