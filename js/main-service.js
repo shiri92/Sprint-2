@@ -79,6 +79,10 @@ function getUniqueKeywords() {
     gKeywordsFiltered = arr;
 }
 
+function findMostSearchedWords() {
+    return ['image', 'music', 'happy', 'dog', 'trump'];
+}
+
 function createImgs() {
     gImgs = [
         createImg('img/memes/1.jpg', ['image', 'sound', 'music', 'flowers', 'mountains', 'dress', 'snow', 'happy', 'girl']),

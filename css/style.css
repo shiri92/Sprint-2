@@ -95,24 +95,59 @@ main {
 .photo-gallery {
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(20, 1fr);
     grid-gap: 2px;
-    height: 1500px;
+    height: 1000px;
     max-width: 300px;
 }
 
 .photo-gallery img {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: cover;
     cursor: pointer;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-
 }
 
 .photo-gallery img:hover {
     opacity: 0.9;
+}
+
+.photo-gallery :nth-child(1) {
+    grid-column: 1 / span 6;
+    grid-row: 1 / span 4;
+    object-fit: cover;
+}
+
+.photo-gallery :nth-child(2) {
+    grid-column: 4 / span 6;
+    grid-row: 4 / span 4;
+    object-fit: cover;
+}
+
+.photo-gallery :nth-child(3) {
+    grid-column: 1 / span 6;
+    grid-row: 7 / span 4;
+    object-fit: cover;
+}
+
+.photo-gallery :nth-child(4) {
+    grid-column: 4 / span 6;
+    grid-row: 10 / span 4;
+    object-fit: cover;
+}
+
+.photo-gallery :nth-child(5) {
+    grid-column: 1 / span 6;
+    grid-row: 13 / span 4;
+    object-fit: cover;
+}
+
+.photo-gallery :nth-child(6) {
+    grid-column: 4 / span 6;
+    grid-row: 16 / span 4;
+    object-fit: cover;
 }
 
 .upload {
@@ -126,6 +161,17 @@ main {
 
 button {
     cursor: pointer;
+}
+
+.btn-page {
+    font-size: 20px;
+    background-color: rgb(218, 193, 243);
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.btn-page:hover {
+    background-color: rgb(191, 147, 235);
 }
 
 .keywords-searchbox {
@@ -155,7 +201,8 @@ button {
 
 .aside {
     background-color: gold;
-    width: 200px;
+    /* width: 200px; */
+    margin: 20px;
 }
 
 .showen-keyword {
@@ -178,6 +225,7 @@ button {
 canvas {
     background-color: rgb(65, 65, 65);
     /* border: 2px solid gold; */
+    margin: 6px 0 4px 0;
 }
 
 .delete-line img {
@@ -256,31 +304,56 @@ footer {
         background-color: rgb(57, 97, 122);
         /* order: -1; */
     }
-
     /* Nav */
     .nav-bar li {
         padding: 8px 16px;
     }
-
     .nav-bar li:hover {
         background-color: rgb(32, 45, 54);
     }
-
     .photo-gallery {
         margin: 0 auto;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        height: 750px;
+        grid-template-columns: repeat(15, 1fr);
+        grid-template-rows: repeat(45, 1fr);
+        height: 950px;
         max-width: 700px;
     }
-
+    .photo-gallery :nth-child(1) {
+        grid-column: 1 / span 6;
+        grid-row: 1 / span 12;
+        object-fit: cover;
+    }
+    .photo-gallery :nth-child(2) {
+        grid-column: 7 / span 6;
+        grid-row: 1 / span 12;
+        object-fit: cover;
+    }
+    .photo-gallery :nth-child(3) {
+        grid-column: 4 / span 6;
+        grid-row: 10 / span 12;
+        object-fit: cover;
+    }
+    .photo-gallery :nth-child(4) {
+        grid-column: 10 / span 6;
+        grid-row: 10 / span 12;
+        object-fit: cover;
+    }
+    .photo-gallery :nth-child(5) {
+        grid-column: 1 / span 6;
+        grid-row: 19 / span 12;
+        object-fit: cover;
+    }
+    .photo-gallery :nth-child(6) {
+        grid-column: 7 / span 6;
+        grid-row: 19 / span 12;
+        object-fit: cover;
+    }
     .main-gallery {
         flex-direction: row;
     }
-
     /************ aside ************/
-    aside {
-        margin-right: 20px;
+    .aside {
+        flex-direction: column;
     }
 }
 
@@ -294,49 +367,42 @@ footer {
         height: 500px;
         max-width: 1000px;
     }
-
     .photo-gallery :nth-child(1) {
         /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 61% 100%, 60% 96%, 59% 94%, 60% 90%, 62% 87%, 63% 84%, 62% 82%, 60% 80%, 57% 79%, 53% 78%, 47% 78%, 42% 80%, 41% 83%, 41% 86%, 42% 88%, 43% 90%, 43% 93%, 42% 96%, 41% 98%, 38% 100%, 0% 100%); */
         grid-column: 1 / span 6;
         grid-row: 1 / span 4;
         object-fit: cover;
     }
-
     .photo-gallery :nth-child(2) {
         /* clip-path: polygon(0% 0%, 100% 1%, 100% 100%, 61% 100%, 60% 96%, 59% 94%, 60% 90%, 62% 87%, 63% 84%, 62% 82%, 60% 80%, 57% 79%, 53% 78%, 47% 78%, 42% 80%, 41% 83%, 41% 86%, 42% 88%, 43% 90%, 43% 93%, 42% 96%, 41% 98%, 38% 100%, 0% 100%, 0% 54%, 4% 54%, 7% 54%, 11% 56%, 14% 58%, 19% 58%, 21% 56%, 22% 52%, 22% 48%, 22% 45%, 20% 42%, 18% 39%, 14% 39%, 11% 41%, 8% 43%, 6% 43%, 3% 42%, 1% 42%, 0% 39%); */
         grid-column: 7 / span 6;
         grid-row: 1 / span 4;
         object-fit: cover;
     }
-
     .photo-gallery :nth-child(3) {
         /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 58% 100%, 57% 98%, 57% 95%, 59% 93%, 61% 89%, 63% 87%, 63% 83%, 62% 80%, 58% 77%, 54% 76%, 50% 77%, 46% 78%, 43% 80%, 40% 83%, 39% 87%, 39% 91%, 40% 94%, 41% 96%, 41% 99%, 39% 99%, 36% 100%, 0% 100%, 0% 54%, 4% 54%, 7% 54%, 11% 56%, 14% 58%, 19% 58%, 21% 56%, 22% 52%, 22% 48%, 22% 45%, 20% 42%, 18% 39%, 14% 39%, 11% 41%, 8% 43%, 6% 43%, 3% 42%, 1% 42%, 0% 39%); */
         grid-column: 13 / span 6;
         grid-row: 1 / span 4;
         object-fit: cover;
     }
-
     .photo-gallery :nth-child(4) {
         /* clip-path: polygon(0% 100%, 0% 20%, 37% 21%, 37% 17%, 36% 14%, 36% 10%, 37% 5%, 39% 2%, 45% 0%, 52% 0%, 56% 2%, 57% 8%, 57% 14%, 55% 19%, 100% 21%, 100% 100%); */
         grid-column: 4 / span 6;
-        grid-row: 4 / span 6;
+        grid-row: 4 / span 4;
         object-fit: cover;
     }
-
     .photo-gallery :nth-child(5) {
         /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 58% 100%, 57% 98%, 57% 95%, 59% 93%, 61% 89%, 63% 87%, 63% 83%, 62% 80%, 58% 77%, 54% 76%, 50% 77%, 46% 78%, 43% 80%, 40% 83%, 39% 87%, 39% 91%, 40% 94%, 41% 96%, 41% 99%, 39% 99%, 36% 100%, 0% 100%, 0% 54%, 4% 54%, 7% 54%, 11% 56%, 14% 58%, 19% 58%, 21% 56%, 22% 52%, 22% 48%, 22% 45%, 20% 42%, 18% 39%, 14% 39%, 11% 41%, 8% 43%, 6% 43%, 3% 42%, 1% 42%, 0% 39%); */
         grid-column: 10 / span 6;
-        grid-row: 4 / span 6;
+        grid-row: 4 / span 4;
         object-fit: cover;
     }
-
     .photo-gallery :nth-child(6) {
         /* clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 58% 100%, 57% 98%, 57% 95%, 59% 93%, 61% 89%, 63% 87%, 63% 83%, 62% 80%, 58% 77%, 54% 76%, 50% 77%, 46% 78%, 43% 80%, 40% 83%, 39% 87%, 39% 91%, 40% 94%, 41% 96%, 41% 99%, 39% 99%, 36% 100%, 0% 100%, 0% 54%, 4% 54%, 7% 54%, 11% 56%, 14% 58%, 19% 58%, 21% 56%, 22% 52%, 22% 48%, 22% 45%, 20% 42%, 18% 39%, 14% 39%, 11% 41%, 8% 43%, 6% 43%, 3% 42%, 1% 42%, 0% 39%); */
         grid-column: 16 / span 6;
-        grid-row: 4 / span 6;
+        grid-row: 4 / span 4;
         object-fit: cover;
     }
-
 }
 
 
