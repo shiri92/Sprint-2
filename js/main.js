@@ -6,7 +6,7 @@ function init() {
     gCtx.font = gFont;
     createImgs();
     renderImgs();
-    $(window).resize(function () {
+    $(window).resize(function() {
         changeText();
     });
     // listen for mouse events
@@ -15,26 +15,40 @@ function init() {
     gCanvas.onmousemove = onMove;
 }
 
+
 function renderImgs() {
     var imgs = getImgs();
-    var newImgs = imgs.reduce(function (acc, img) {
+    var newImgs = imgs.reduce(function(acc, img) {
         if (img.isShown === true) {
             acc.push(img);
         }
         return acc;
     }, [])
 
-    var strHtml = newImgs.map(function (img) {
+    var strHtml = newImgs.map(function(img) {
         return `<img onclick="chooseImgFromGallery(this)" src="${img.url}" alt="img">`
     })
     $('.photo-gallery').html(strHtml.join(''));
 }
+
+
+function renderKeywordsList() {
+    var strUl = gKeywordsFiltered.map(function(keyword) {
+        return `<li><a href="#">${keyword}</a></li>`
+    })
+    $('.keywords-searchbox').html(strUl.join(''));
+}
+
 
 function searchImgByWord() {
     var inputTxt = $('#search').val();
     for (var i = 0; i < gImgs.length; i++) {
         var imgKeywords = gImgs[i].keywords;
         for (var j = 0; j < imgKeywords.length; j++) {
+            gAllkeywords.push(imgKeywords[j]);
+            gKeywordsFiltered = gAllkeywords.filter(function(keyword, i) {
+                return gAllkeywords.indexOf(keyword) === i;
+            })
             if (imgKeywords[j].indexOf(inputTxt.toLowerCase()) > -1) {
                 gImgs[i].isShown = true;
                 break;
@@ -43,15 +57,41 @@ function searchImgByWord() {
             }
         }
     }
+    var strUl = gKeywordsFiltered.map(function(keyword) {
+        return `<li><a href="#">${keyword}</a></li>`
+    })
+    $('.keywords-searchbox').html(strUl.join(''));
+
+
     renderImgs();
 }
 
+function showKeyWordsOnSearch() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('search');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById('keywords-searchbox');
+    li = ul.getElementsByTagName('li');
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName('a')[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+
+
 function checkPages(val) {
     if (val === 'gallery') {
-        $('.main-gallery').css('display', 'block');
+        $('.main-gallery').css('display', 'flex');
         $('.main-edit').css('display', 'none');
         $('.title').html('Gallery🎞');
     }
+
     if (val === 'edit') {
         $('.main-gallery').css('display', 'none');
         $('.main-edit').css('display', 'block');
@@ -73,6 +113,7 @@ function moveToEdit() {
     $('.main-gallery').css('display', 'none');
     $('.main-edit').css('display', 'block');
     $('.title').html('Edit🖊');
+
     if (isFirstEdit) {
         onRenderNewLine();
         onRenderNewLine();
@@ -80,6 +121,7 @@ function moveToEdit() {
         isFirstEdit = false;
     }
 }
+
 
 function renderCanvasGallery(img) {
     if (img) {
@@ -132,7 +174,7 @@ function onFileInputChange(ev) {
 //UPLOAD IMG WITH INPUT FILE
 function handleImageFromUpload(ev, onImageReady) {
     var reader = new FileReader();
-    reader.onload = function (event) {
+    reader.onload = function(event) {
         var img = new Image();
         img.onload = onImageReady.bind(null, img);
         img.src = event.target.result;

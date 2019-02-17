@@ -8,15 +8,13 @@
 
     <title>Sprint2!</title>
     <link rel="icon" href="img/icon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css">
 
 </head>
 
-<body onload="init()">
+<body onload="init()" class="flex flex-col">
 
     <!-- Header and Navigation -->
     <header class="flex">
@@ -32,17 +30,33 @@
     </div>
 
     <!----------------------- Main Gallery --------------------->
-    <main class="main-gallery">
-        <input type="text" id="search" onkeyup="searchImgByWord()" placeholder="&#xF002; Search for picture..">
+    <main class="main-gallery flex space-even">
 
-        <input type="file" name="image" onchange="onFileInputChange(event)" />
-        <!-- Photos galery -->
-        <section class="photo-gallery">
-        </section>
+        <div class="aside keywords-container">
+            <div>boy</div>
+            <div>happy</div>
+            <div>eyes</div>
+            <div>four</div>
+            <div>clown</div>
+        </div>
 
+        <div class="gallery-content">
+            <div class="gallery-inputs flex space-between wrap">
+                <input type="text" id="search" onkeyup="searchImgByWord()" placeholder="🔍Search for picture..">
+                <ul class="keywords-searchbox">
+                </ul>
 
-        <button onclick="onPrevPage()">🡄 Prev page</button>
-        <button onclick="onNextPage()">Next page 🡆</button>
+                <input class="upload" type="file" name="image" onchange="onFileInputChange(event)" />
+            </div>
+            <!-- Photos galery -->
+            <section class="photo-gallery">
+            </section>
+
+            <div class="gallery-pages flex space-around">
+                <button onclick="onPrevPage()">🡄 Prev page</button>
+                <button onclick="onNextPage()">Next page 🡆</button>
+            </div>
+        </div>
 
     </main>
 
@@ -59,15 +73,16 @@
             <section class="input-bar flex space-even wrap ">
                 <div class="new-lines"></div>
 
-                <button onclick="onRenderNewLine()">Add new line 💫</button>
+                <button class="add-line" onclick="onRenderNewLine()">Add new line 💫</button>
 
-                <button onclick="clearCanvas();clearText()">Clear all 💥</button>
+                <button class="clear-all" onclick="clearCanvas();clearText()">Clear all 💥</button>
 
                 <a href="#" onclick="downloadCanvas(this)" download="meme">Download 📥</a>
             </section>
 
         </div>
     </main>
+
 
     <!-- Footer -->
     <footer class="">

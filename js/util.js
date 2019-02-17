@@ -67,6 +67,10 @@ function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getRandomSize(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+}
+
 
 function saveToStorage(key, value) {
     var str = JSON.stringify(value);
