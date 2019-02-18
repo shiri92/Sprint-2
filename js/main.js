@@ -13,7 +13,6 @@ function init() {
     gCanvas.onmousedown = onDown;
     gCanvas.onmouseup = onUp;
     gCanvas.onmousemove = onMove;
-    startup();
 }
 
 function renderImgs() {
@@ -116,6 +115,8 @@ function moveToEdit() {
         $('.line-text-1').focus();
         isFirstEdit = false;
     }
+    // service func to touch phone
+    startup();
 }
 
 function renderCanvasGallery(img) {
@@ -459,10 +460,17 @@ function onDown(event) {
     event.preventDefault();
     event.stopPropagation();
 
+    var touches = event.changedTouches;
     // get the current mouse position
-    var mouseX = parseInt(event.clientX);
-    var mouseY = parseInt(event.clientY);
+    if (touches) {
+        var mouseX = touches[0].pageX;
+        var mouseY = touches[0].pageY;
+    } else {
+        var mouseX = parseInt(event.clientX);
+        var mouseY = parseInt(event.clientY);
+    }
     isDragOn = false;
+
 
     var distanceW = (gWidthWindow - gWidthImg) / 2;
     if (distanceW >= 0) {
@@ -487,6 +495,8 @@ function onDown(event) {
     // save the current mouse position
     gStartX = mouseX;
     gStartY = mouseY;
+
+    console.log(event.changedTouches)
 }
 
 // handle mouseup events
@@ -512,9 +522,15 @@ function onMove(event) {
         event.preventDefault();
         event.stopPropagation();
 
+        var touches = event.changedTouches;
         // get the current mouse position
-        var mouseX = parseInt(event.clientX);
-        var mouseY = parseInt(event.clientY);
+        if (touches) {
+            var mouseX = touches[0].pageX;
+            var mouseY = touches[0].pageY;
+        } else {
+            var mouseX = parseInt(event.clientX);
+            var mouseY = parseInt(event.clientY);
+        }
 
         // calculate the distance the mouse has moved since the last mousemove
         var distanceX = mouseX - gStartX;

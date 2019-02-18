@@ -146,90 +146,101 @@ function howManyPages() {
 // copies function for touch phone
 function startup() {
     var el = gCanvas;
-    el.addEventListener('touchstart', handleStart, false);
-    el.addEventListener('touchend', handleEnd, false);
-    el.addEventListener('touchcancel', handleCancel, false);
-    el.addEventListener('touchmove', handleMove, false);
-    // console.log('initialized.');
+    el.addEventListener('touchstart', onDown, false);
+    el.addEventListener('touchend', onUp, false);
+    el.addEventListener('touchmove', onMove, false);
+    // el.addEventListener('touchstart', handleStart, false);
+    // el.addEventListener('touchend', handleEnd, false);
+    // el.addEventListener('touchcancel', handleCancel, false);
+    // el.addEventListener('touchmove', handleMove, false);
+    console.log('initialized.');
 }
 
-function handleStart(evt) {
-    evt.preventDefault();
-    // console.log('touchstart.');
-    var el = gCanvas;
-    var touches = evt.changedTouches;
+// function handleStart(evt) {
+//     evt.preventDefault();
+//     console.log('touchstart.');
+//     var el = gCanvas;
+//     var touches = evt.changedTouches;
 
-    for (var i = 0; i < touches.length; i++) {
-        // console.log('touchstart:' + i + '...');
-        ongoingTouches.push(copyTouch(touches[i]));
-        var color = colorForTouch(touches[i]);
-        gCtx.beginPath();
-        gCtx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false); // a circle at the start
-        gCtx.fillStyle = color;
-        gCtx.fill();
-        // console.log('touchstart:' + i + '.');
-    }
-}
+//     for (var i = 0; i < touches.length; i++) {
+//         console.log('touchstart:' + i + '...');
+//         ongoingTouches.push(copyTouch(touches[i]));
+//         gCtx.beginPath();
+//         gCtx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false); // a circle at the start
+//         gCtx.fill();
+//         console.log('touchstart:' + i + '.');
+//     }
+// }
 
-function handleMove(evt) {
-    evt.preventDefault();
-    var el = gCanvas;
-    var touches = evt.changedTouches;
+// function handleMove(evt) {
+//     // evt.preventDefault();
+//     var el = gCanvas;
+//     var touches = evt.changedTouches;
 
-    for (var i = 0; i < touches.length; i++) {
-        var color = colorForTouch(touches[i]);
-        var idx = ongoingTouchIndexById(touches[i].identifier);
+//     for (var i = 0; i < touches.length; i++) {
+//         var idx = ongoingTouchIndexById(touches[i].identifier);
 
-        if (idx >= 0) {
-            // console.log('continuing touch ' + idx);
-            gCtx.beginPath();
-            // console.log('ctx.moveTo(' + ongoingTouches[idx].pageX + ', ' + ongoingTouches[idx].pageY + ');');
-            gCtx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-            // console.log('ctx.lineTo(' + touches[i].pageX + ', ' + touches[i].pageY + ');');
-            gCtx.lineTo(touches[i].pageX, touches[i].pageY);
-            gCtx.lineWidth = 4;
-            gCtx.strokeStyle = color;
-            gCtx.stroke();
+//         if (idx >= 0) {
+//             console.log('continuing touch ' + idx);
+//             gCtx.beginPath();
+//             console.log('ctx.moveTo(' + ongoingTouches[idx].pageX + ', ' + ongoingTouches[idx].pageY + ');');
+//             gCtx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+//             console.log('ctx.lineTo(' + touches[i].pageX + ', ' + touches[i].pageY + ');');
+//             gCtx.lineTo(touches[i].pageX, touches[i].pageY);
+//             gCtx.lineWidth = 4;
+//             gCtx.stroke();
 
-            ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
-            // console.log('.');
-        } else {
-            // console.log('can\'t figure out which touch to continue');
-        }
-    }
-}
+//             ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // swap in the new touch record
+//             console.log('.');
+//         } else {
+//             console.log('can\'t figure out which touch to continue');
+//         }
+//     }
+// }
 
-function handleEnd(evt) {
-    evt.preventDefault();
-    // console.log('touchend');
-    var el = gCanvas;
-    var touches = evt.changedTouches;
+// function handleEnd(evt) {
+//     evt.preventDefault();
+//     var el = gCanvas;
+//     var touches = evt.changedTouches;
 
-    for (var i = 0; i < touches.length; i++) {
-        var color = colorForTouch(touches[i]);
-        var idx = ongoingTouchIndexById(touches[i].identifier);
+//     for (var i = 0; i < touches.length; i++) {
+//         var idx = ongoingTouchIndexById(touches[i].identifier);
 
-        if (idx >= 0) {
-            gCtx.lineWidth = 4;
-            gCtx.fillStyle = color;
-            gCtx.beginPath();
-            gCtx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-            gCtx.lineTo(touches[i].pageX, touches[i].pageY);
-            gCtx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8); // and a square at the end
-            ongoingTouches.splice(idx, 1); // remove it; we're done
-        } else {
-            // console.log('can\'t figure out which touch to end');
-        }
-    }
-}
+//         if (idx >= 0) {
+//             gCtx.lineWidth = 4;
+//             gCtx.beginPath();
+//             gCtx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+//             gCtx.lineTo(touches[i].pageX, touches[i].pageY);
+//             gCtx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8); // and a square at the end
+//             ongoingTouches.splice(idx, 1); // remove it; we're done
+//         } else {
+//             console.log('can\'t figure out which touch to end');
+//         }
+//     }
+// }
 
-function handleCancel(evt) {
-    evt.preventDefault();
-    // console.log('touchcancel.');
-    var touches = evt.changedTouches;
+// function handleCancel(evt) {
+//     evt.preventDefault();
+//     console.log('touchcancel.');
+//     var touches = evt.changedTouches;
 
-    for (var i = 0; i < touches.length; i++) {
-        var idx = ongoingTouchIndexById(touches[i].identifier);
-        ongoingTouches.splice(idx, 1); // remove it; we're done
-    }
-}
+//     for (var i = 0; i < touches.length; i++) {
+//         var idx = ongoingTouchIndexById(touches[i].identifier);
+//         ongoingTouches.splice(idx, 1); // remove it; we're done
+//     }
+// }
+
+// function copyTouch(touch) {
+//     return { identifier: touch.identifier, pageX: touch.pageX, pageY: touch.pageY };
+// }
+
+// function ongoingTouchIndexById(idToFind) {
+//     for (var i = 0; i < ongoingTouches.length; i++) {
+//         var id = ongoingTouches[i].identifier;
+
+//         if (id == idToFind) {
+//             return i;
+//         }
+//     }
+//     return -1; // not found
+// }
