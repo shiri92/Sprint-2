@@ -69,14 +69,16 @@
                 <canvas height="300" width="300" id="edit-canvas"></canvas>
             </section>
 
-            <section class="input-bar flex space-even wrap ">
+            <section class="input-bar flex space-even wrap">
                 <div class="new-lines"></div>
 
-                <button class="add-line" onclick="onRenderNewLine()">Add new line 💫</button>
+                <div class="features">
+                    <button class="add-line" onclick="onRenderNewLine()">New line 💫</button>
 
-                <button class="clear-all" onclick="clearCanvas();clearText()">Clear all 💥</button>
+                    <button class="clear-all" onclick="clearCanvas();clearText()">Clear all 💥</button>
 
-                <a href="#" onclick="downloadCanvas(this)" download="meme">Download 📥</a>
+                    <a href="#" onclick="downloadCanvas(this)" download="meme">Download 📥</a>
+                </div>
             </section>
 
         </div>

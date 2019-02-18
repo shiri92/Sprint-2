@@ -13,14 +13,8 @@ function init() {
     gCanvas.onmousedown = onDown;
     gCanvas.onmouseup = onUp;
     gCanvas.onmousemove = onMove;
-    // renderKeysToShow();
+    startup();
 }
-
-// function renderKeysToShow() {
-
-// }
-
-
 
 function renderImgs() {
     var imgs = getImgs();
@@ -36,7 +30,6 @@ function renderImgs() {
     })
     $('.photo-gallery').html(strHtml.join(''));
 }
-
 
 function searchImgByWord() {
     getUniqueKeywords();
@@ -55,7 +48,6 @@ function searchImgByWord() {
     }
     renderImgs();
 }
-
 
 function renderKeywordsList(word) {
     var keysToShow = [];
@@ -110,7 +102,6 @@ function moveToEdit() {
     }
 }
 
-
 function renderCanvasGallery(img) {
     if (img) {
         gCurrImg = img;
@@ -126,7 +117,7 @@ function renderCanvasGallery(img) {
         var sum = headerH + titleH + inputsH + footerH;
 
         gCanvas.width = (gWidthImg < gWidthWindow) ? gWidthImg : gWidthWindow - 2;
-        gCanvas.height = (gHeightImg < gHeightWindow - sum) ? gHeightImg : gHeightWindow - sum - 4 - 10;
+        gCanvas.height = (gHeightImg < gHeightWindow - sum - 4 - 4) ? gHeightImg : gHeightWindow - sum - 4 - 4;
 
         var wRatio = gCanvas.width / gWidthImg;
         var hRatio = gCanvas.height / gHeightImg;
@@ -134,9 +125,13 @@ function renderCanvasGallery(img) {
         if (ratio === wRatio) {
             var left = 0;
             if (hRatio === 1) {
-                var top = (1 - ratio) * gCanvas.height / 2;
+                // var top = (1 - ratio) * gCanvas.height / 2;
+                var top = 0;
+                gCanvas.height = gCanvas.height - ((1 - ratio) * gCanvas.height);
             } else {
-                var top = (1 - (wRatio / hRatio)) * gCanvas.height / 2;
+                // var top = (1 - (wRatio / hRatio)) * gCanvas.height / 2;
+                var top = 0;
+                gCanvas.height = gCanvas.height - ((1 - ratio) * gCanvas.height);
             }
         } else {
             if (ratio === hRatio) {
@@ -151,7 +146,6 @@ function renderCanvasGallery(img) {
         gCtx.drawImage(img, left, top, gWidthImg * ratio, gHeightImg * ratio);
 
         gTopInput = top;
-        gDistanceHeightBlack = gHeightImg * ratio;
     }
 }
 
@@ -211,7 +205,7 @@ function printRects() {
             }
             gCtx.rectWidth = BORDER_BOX;
             var rectTop = gMainLines[i]['inputs']['top'] - rectHeight + 8;
-            if (gMainLines[i]['inputs']['isMoveOnce'] === false) {
+            if (gMainLines[i]['inputs']['isMoveOnce'] === false && !(gMainLines[i]['text-align'])) {
                 gMainLines[i]['inputs']['left'] = (gCanvas.width / 2) - (rectWidth / 2);
             }
             var rectLeft = gMainLines[i]['inputs']['left'];
@@ -232,19 +226,33 @@ function drawLines() {
         if (gMainLines[i]['inputs']['isMoveOnce'] === false) {
             if (align) {
                 if (align === 'right') {
-                    var spaceLeft = 0 + rectWidth;
+                    var spaceLeft = 0 + rectWidth / 2 + 6;
                 }
                 if (align === 'center') {
-                    var spaceLeft = (gCanvas.width / 2);;
+                    var spaceLeft = (gCanvas.width / 2);
                 }
                 if (align === 'left') {
-                    var spaceLeft = (gCanvas.width - rectWidth);;
+                    var spaceLeft = (gCanvas.width - rectWidth / 2 - 10);
                 }
+                gMainLines[i]['inputs']['left'] = spaceLeft - (rectWidth / 2);
             } else {
                 var spaceLeft = (gCanvas.width / 2);
             }
         } else {
-            var spaceLeft = gMainLines[i]['inputs']['left'] + (rectWidth / 2) + 3;
+            if (align) {
+                if (align === 'right') {
+                    var spaceLeft = 0 + rectWidth / 2 + 6;
+                }
+                if (align === 'center') {
+                    var spaceLeft = (gCanvas.width / 2);
+                }
+                if (align === 'left') {
+                    var spaceLeft = (gCanvas.width - rectWidth / 2 - 10);
+                }
+                gMainLines[i]['inputs']['left'] = spaceLeft - (rectWidth / 2);
+            } else {
+                var spaceLeft = gMainLines[i]['inputs']['left'] + (rectWidth / 2) + 3;
+            }
         }
 
         gCtx.font = gFont[i];
@@ -362,7 +370,7 @@ function updateStrLinesValue(isClear) {
         classToUpdate = '.input-font-' + (i + 1);
         $(classToUpdate).val(gMainLines[i]['font-family']);
 
-        classToUpdate = '.input-font-' + (i + 1);
+        classToUpdate = '.text-align' + (i + 1);
         $(classToUpdate).val(gMainLines[i]['text-align']);
     }
 }
@@ -373,8 +381,8 @@ function onRenderNewLine() {
     <div class="flex wrap space-between">
         <input class="line-text line-text-${gLineNumber}" oninput="changeText()" type="text" placeholder="write line✍">
         <button class="delete-line" onclick="onRemoveInputText(this,${gLineNumber})">🗑️</button>
-        <input class="color-text-${gLineNumber}" onchange="changeTextColor(this.value,${gLineNumber})" type="color" value="#ffffff">
-        <input class="color-stroke-${gLineNumber}" onchange="changeStrokeColor(this.value,${gLineNumber})" type="color" value="#000000">
+        <input class="btn-color color-text-${gLineNumber}" onchange="changeTextColor(this.value,${gLineNumber})" type="color" value="#ffffff">
+        <input class="btn-color color-stroke-${gLineNumber}" onchange="changeStrokeColor(this.value,${gLineNumber})" type="color" value="#000000">
         <div class="select-editable">
             <select onchange="this.nextElementSibling.value=this.value; onChangeFontSize(${gLineNumber})">
                 <option value="8">8</option>
@@ -394,9 +402,11 @@ function onRenderNewLine() {
             <option value="Play">play</option>
             <option value="Inconsolata">inconsolata</option>
         </select>
-        <button class="btn-align-${gLineNumber}" onclick="onTextAlign(this,${gLineNumber},'right')">⇚</button>
-        <button class="btn-align-${gLineNumber}" onclick="onTextAlign(this,${gLineNumber},'center')">⤄</button>
-        <button class="btn-align-${gLineNumber}" onclick="onTextAlign(this,${gLineNumber},'left')">⇛</button>
+        <div class="btn-align-all flex space-even">
+        <button class="btn-align btn-align-${gLineNumber}" onclick="onTextAlign(this,${gLineNumber},'right')">⇚</button>
+        <button class="btn-align btn-align-${gLineNumber}" onclick="onTextAlign(this,${gLineNumber},'center')">⤄</button>
+        <button class="btn-align btn-align-${gLineNumber}" onclick="onTextAlign(this,${gLineNumber},'left')">⇛</button>
+        </div>
     </div>`;
 
     gStrLines.push(strLine);
@@ -446,10 +456,12 @@ function onDown(event) {
     }
     for (var i = 0; i < gMainLines.length; i++) {
         var r = gMainLines[i]['inputs'];
+        var fontSize = (gMainLines[i]['font-size'] * 4 + 2)
+        var firstSize = FIRST_FONT_SIZE * 4 + 2;
         if (mouseX > r.left - BORDER_BOX + distance &&
             mouseX < r.left + r.width + 6 + BORDER_BOX + distance &&
-            mouseY > r.top - BORDER_BOX - 6 &&
-            mouseY < r.top + ((gMainLines[i]['font-size'] * 4 + 2) - 6 + BORDER_BOX)) {
+            mouseY > r.top - BORDER_BOX - (fontSize - firstSize) &&
+            mouseY < r.top + (firstSize + BORDER_BOX)) {
             // if yes, set that rects isDrag = true
             isDragOn = true;
             r.isDrag = true;
@@ -501,6 +513,7 @@ function onMove(event) {
                 r.left += distanceX;
                 r.top += distanceY;
                 r.isMoveOnce = true;
+                gMainLines[i]['text-align'] = '';
             }
         }
 
