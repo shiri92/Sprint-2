@@ -87,30 +87,30 @@ function findMostSearchedWords() {
 
 function createImgs() {
     gImgs = [
-        createImg('img/memes/1.jpg', ['image', 'sound', 'music', 'flowers', 'mountains', 'dress', 'snow', 'happy', 'girl']),
+        createImg('img/memes/1.jpg', ['image', 'sound', 'music', 'flowers', 'mountains', 'dress', 'snow', 'happy', 'girl', 'hello', 'world!']),
         createImg('img/memes/2.jpg', ['image', 'trump', 'presidente', 'finger', 'usa', 'face', 'fake', 'news', 'blond']),
         createImg('img/memes/3.jpg', ['image', 'happy', 'cute', 'dogs', 'kiss', 'fur', 'tongue', 'love']),
         createImg('img/memes/4.jpg', ['image', 'dog', 'baby', 'bad', 'sleep', 'white', 'blanket', 'fur', 'head', 'cute']),
-        createImg('img/memes/5.jpg', ['image', 'baby', 'child', 'victory', 'beach', 'sea', 'sand', 'angry', 'boy']),
+        createImg('img/memes/5.jpg', ['image', 'baby', 'child', 'victory', 'beach', 'sea', 'sand', 'angry', 'boy', 'hello', 'world!']),
         createImg('img/memes/6.jpg', ['image', 'cat', 'cumputer', 'cute', 'sleepy', 'hears', 'blanket', 'tired']),
-        createImg('img/memes/7.jpg', ['image', 'hat', 'clown', 'hair', 'smile', 'purple', 'teeth']),
+        createImg('img/memes/7.jpg', ['image', 'hat', 'clown', 'hair', 'smile', 'purple', 'teeth', 'sushi', 'hello', 'world!']),
         createImg('img/memes/8.jpg', ['image', 'baby', 'filed', 'lake', 'smile', 'grass', 'cunning', 'squares', 'boy']),
         createImg('img/memes/9.jpg', ['image', 'fingers', 'eyes', 'old', 'man', 'just', 'beard']),
         createImg('img/memes/10.jpg', ['image', 'shout', 'boy', 'hand', 'eyes', 'fear', 'nervous']),
-        createImg('img/memes/11.jpg', ['image', 'hair', 'HD', 'hands', 'sophisticated', 'dumb', 'japanese', 'eyes']),
-        createImg('img/memes/12.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
-        createImg('img/memes/13.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/11.jpg', ['image', 'dog', 'hair', 'HD', 'hands', 'sophisticated', 'dumb', 'japanese', 'eyes']),
+        createImg('img/memes/12.jpg', ['image', 'fingers', '4', 'four', 'sushi', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/13.jpg', ['image', 'fingers', '4', 'four', 'hello', 'world!', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
         createImg('img/memes/14.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
-        createImg('img/memes/15.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
-        createImg('img/memes/16.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/15.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'sushi', '2', 'two']),
+        createImg('img/memes/16.jpg', ['image', 'hello', 'world!', 'dog', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
         createImg('img/memes/17.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
-        createImg('img/memes/18.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
-        createImg('img/memes/19.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/18.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'sushi', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/19.jpg', ['image', 'fingers', '4', 'four', 'hello', 'world!', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
         createImg('img/memes/20.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
-        createImg('img/memes/21.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
-        createImg('img/memes/22.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
-        createImg('img/memes/23.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
-        createImg('img/memes/24.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'weird', '2', 'two'])
+        createImg('img/memes/21.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'hello', 'world!', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/22.jpg', ['image', 'fingers', '4', 'four', 'peace', 'dog', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/23.jpg', ['image', 'fingers', '4', 'four', 'sushi', 'suit', 'gray', 'bald', 'weird', '2', 'two']),
+        createImg('img/memes/24.jpg', ['image', 'fingers', '4', 'four', 'peace', 'suit', 'gray', 'bald', 'hello', 'world!', '2', 'two'])
 
     ];
 }

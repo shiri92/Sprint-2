@@ -31,14 +31,30 @@ function renderImgs() {
     $('.photo-gallery').html(strHtml.join(''));
 }
 
-function searchImgByWord() {
+
+function searchImgByWord(value) {
     getUniqueKeywords();
-    var inputTxt = $('#search').val();
-    renderKeywordsList(inputTxt);
+    renderKeywordsList(value);
     for (var i = 0; i < gImgs.length; i++) {
         var imgKeywords = gImgs[i].keywords;
         for (var j = 0; j < imgKeywords.length; j++) {
-            if (imgKeywords[j].indexOf(inputTxt.toLowerCase()) > -1) {
+            if (imgKeywords[j].indexOf(value.toLowerCase()) > -1) {
+                gImgs[i].isShown = true;
+                break;
+            } else {
+                gImgs[i].isShown = false;
+            }
+        }
+    }
+    renderImgs();
+}
+
+function searchImgByPressOnKey(value) {
+    var txt = $(value).html();
+    for (var i = 0; i < gImgs.length; i++) {
+        var imgKeywords = gImgs[i].keywords;
+        for (var j = 0; j < imgKeywords.length; j++) {
+            if (imgKeywords[j].indexOf(txt.toLowerCase()) > -1) {
                 gImgs[i].isShown = true;
                 break;
             } else {

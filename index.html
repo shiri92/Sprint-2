@@ -27,19 +27,21 @@
 
     <!----------------------- Main Gallery --------------------->
     <main class="main-gallery flex space-even">
-        <!-- 
-        <div class="aside keywords-container flex space-around">
-            <div class="showen-keyword">boy</div>
-            <div class="showen-keyword">happy</div>
-            <div class="showen-keyword">eyes</div>
-            <div class="showen-keyword">four</div>
-            <div class="showen-keyword">clown</div>
-        </div> -->
+
+        <div class="aside keywords-container flex space-even wrap">
+            <div class="keyword showen-keyword1" onclick="searchImgByPressOnKey(this)">Dog</div>
+            <div class="keyword showen-keyword2" onclick="searchImgByPressOnKey(this)">Happy</div>
+            <div class="keyword showen-keyword3" onclick="searchImgByPressOnKey(this)">Eyes</div>
+            <div class="keyword showen-keyword4" onclick="searchImgByPressOnKey(this)">World!</div>
+            <div class="keyword showen-keyword5" onclick="searchImgByPressOnKey(this)">Sushi</div>
+        </div>
 
         <div class="gallery-content">
+
+
             <div class="gallery-inputs flex space-between wrap">
                 <div class="search-container flex flex-col">
-                    <input type="text" id="search" onkeyup="searchImgByWord()" placeholder="🔍Search for picture.." list="keywords" name="keyword">
+                    <input type="text" id="search" onkeyup="searchImgByWord(this.value)" placeholder="🔍Search for picture.." list="keywords" name="keyword">
                     <datalist class="keywords-searchbox" id="keywords">
                     </datalist>
                 </div>
